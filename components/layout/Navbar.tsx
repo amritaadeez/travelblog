@@ -2,79 +2,113 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
+import { useScroll } from '@/hooks/useScroll';
+import MobileMenu from './MobileMenu';
+
+const NAV_ITEMS = [
+  { label: 'Blog', path: '/blog' },
+  { label: 'Categories', path: '/categories' },
+  { label: 'About', path: '/about' },
+  { label: 'Contact', path: '/contact' }
+] as const;
 
 export default function Navbar() {
   const pathname = usePathname();
   const isHomePage = pathname === '/';
-  const [scrolled, setScrolled] = useState(false);
+  const isBlogPage = pathname.startsWith('/blog');
+  const isCategoriesPage = pathname === '/categories';
+  const isTransparentPage = isHomePage || isBlogPage || isCategoriesPage;
+  
+  const { isScrolled } = useScroll({ offset: 20 });
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const isScrolled = window.scrollY > 20;
-      if (isScrolled !== scrolled) {
-        setScrolled(isScrolled);
+  const getNavStyles = (isScrolled: boolean, isTransparentPage: boolean) => ({
+    nav: `fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
+      isScrolled 
+        ? 'bg-white/95 backdrop-blur-sm shadow-md' 
+        : isTransparentPage 
+          ? 'bg-transparent' 
+          : 'bg-white shadow-sm'
+    }`,
+    link: (isActive: boolean) => `
+      relative px-4 py-2 transition-colors rounded-full
+      ${isScrolled 
+        ? isActive 
+          ? 'text-orange-500' 
+          : 'text-gray-900 hover:text-orange-500' 
+        : isTransparentPage 
+          ? isActive 
+            ? 'text-orange-300' 
+            : 'text-white hover:text-orange-300' 
+          : isActive 
+            ? 'text-orange-500' 
+            : 'text-gray-900 hover:text-orange-500'
       }
-    };
+      ${isActive ? 'after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-current' : ''}
+    `,
+    logo: `text-xl font-bold transition-colors ${
+      isScrolled 
+        ? 'text-gray-900' 
+        : isTransparentPage 
+          ? 'text-white' 
+          : 'text-gray-900'
+    }`,
+    menuIcon: `w-6 h-6 ${
+      isScrolled || !isTransparentPage ? 'text-gray-900' : 'text-white'
+    }`
+  });
 
-    // Prefetch common routes
-    const prefetchRoutes = ['/blog', '/categories', '/about'];
-    prefetchRoutes.forEach(route => {
-      const link = document.createElement('link');
-      link.rel = 'prefetch';
-      link.href = route;
-      document.head.appendChild(link);
-    });
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [scrolled]);
+  const styles = getNavStyles(isScrolled, isTransparentPage);
 
   return (
-    <nav 
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled 
-          ? 'bg-white shadow-md' 
-          : isHomePage 
-            ? 'bg-transparent' 
-            : 'bg-white shadow-sm'
-      }`}
-    >
-      <div className="container mx-auto px-4">
-        <div className="flex justify-between items-center h-16">
-          <Link 
-            href="/" 
-            prefetch={true}
-            className={`text-xl font-bold transition-colors ${
-              scrolled 
-                ? 'text-gray-900' 
-                : isHomePage 
-                  ? 'text-white' 
-                  : 'text-gray-900'
-            }`}
-          >
-            Travel Blog
-          </Link>
-          
-          <div className="hidden md:flex space-x-8">
-            {['blog', 'categories', 'about'].map((item) => (
-              <Link 
-                key={item}
-                href={`/${item}`} 
-                prefetch={true}
-                className={`transition-colors ${
-                  scrolled 
-                    ? 'text-gray-900 hover:text-gray-600' 
-                    : isHomePage 
-                      ? 'text-white hover:text-gray-300' 
-                      : 'text-gray-900 hover:text-gray-600'
-                }`}
+    <>
+      <nav className={styles.nav}>
+        <div className="container mx-auto px-4">
+          <div className="flex justify-between items-center h-16">
+            <Link href="/" className={`${styles.logo} hover:opacity-80 transition-opacity`}>
+              Hidden India
+            </Link>
+            
+            <div className="hidden md:flex items-center space-x-2">
+              {NAV_ITEMS.map(({ label, path }) => (
+                <Link 
+                  key={path}
+                  href={path}
+                  className={styles.link(pathname === path)}
+                >
+                  {label}
+                </Link>
+              ))}
+            </div>
+
+            <button 
+              className="md:hidden p-2 rounded-full hover:bg-white/10 transition-colors"
+              onClick={() => setIsMobileMenuOpen(true)}
+              aria-label="Menu"
+            >
+              <svg 
+                className={styles.menuIcon}
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
               >
-                {item.charAt(0).toUpperCase() + item.slice(1)}
-              </Link>
-            ))}
+                <path 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                  strokeWidth={2} 
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+            </button>
           </div>
         </div>
-      </div>
-    </nav>
+      </nav>
+      <MobileMenu 
+        isOpen={isMobileMenuOpen} 
+        onClose={() => setIsMobileMenuOpen(false)} 
+        items={NAV_ITEMS}
+        currentPath={pathname}
+      />
+    </>
   );
 }

@@ -18,7 +18,7 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: "Travel Blog",
+  title: "Hidden India",
   description: "Explore the world through our travel experiences",
 };
 

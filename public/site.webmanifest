@@ -1,0 +1,19 @@
+{
+  "name": "Hidden India",
+  "short_name": "Hidden India",
+  "icons": [
+    {
+      "src": "https://images.unsplash.com/photo-1514222134-b57cbb8ce073?w=192&h=192&fit=crop&auto=format&q=60",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://images.unsplash.com/photo-1514222134-b57cbb8ce073?w=512&h=512&fit=crop&auto=format&q=60",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#f97316",
+  "background_color": "#ffffff",
+  "display": "standalone"
+}

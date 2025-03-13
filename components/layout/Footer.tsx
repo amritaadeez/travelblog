@@ -2,11 +2,11 @@ import Link from 'next/link';
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-50 border-t">
+    <footer className="bg-gray-50 border-t" style={{ background:'red'}}>
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
-            <h3 className="font-playfair text-lg font-bold mb-4">Travel Blog</h3>
+            <h3 className="font-playfair text-lg font-bold mb-4">Hidden India</h3>
             <p className="text-gray-600">
               Exploring the world one story at a time.
             </p>

@@ -1,44 +1,26 @@
+'use client';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { ArrowLeft } from 'lucide-react';
+import { CATEGORIES } from './data';
 
-const CATEGORIES = [
-  {
-    id: 1,
-    name: "Destinations",
-    description: "Explore popular and hidden gem locations around the world",
-    image: "https://images.unsplash.com/photo-1493246507139-91e8fad9978e?w=1200&auto=format&fit=crop&q=60",
-    slug: "destinations",
-    count: 45
-  },
-  {
-    id: 2,
-    name: "Travel Tips",
-    description: "Expert advice and practical travel guidance",
-    image: "https://images.unsplash.com/photo-1452421822248-d4c2b47f0c81?w=1200&auto=format&fit=crop&q=60",
-    slug: "tips",
-    count: 32
-  },
-  {
-    id: 3,
-    name: "Food & Culture",
-    description: "Culinary adventures and cultural experiences",
-    image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1200&auto=format&fit=crop&q=60",
-    slug: "food",
-    count: 28
-  },
-  {
-    id: 4,
-    name: "Adventure",
-    description: "Thrilling experiences and outdoor activities",
-    image: "https://images.unsplash.com/photo-1527004013197-933c4bb611b3?w=1200&auto=format&fit=crop&q=60",
-    slug: "adventure",
-    count: 35
-  }
-];
+interface Category {
+  id: number;
+  name: string;
+  slug: string;
+  description: string;
+  image: string;
+  count: number;
+}
 
 export default function CategoriesPage() {
+  const router = useRouter();
+
   return (
     <div className="min-h-screen bg-white">
+      {/* Back Button */}
+    
       {/* Hero Section */}
       <div className="relative h-[40vh] bg-gray-900">
         <Image
@@ -58,7 +40,7 @@ export default function CategoriesPage() {
       {/* Categories Grid */}
       <div className="container mx-auto px-4 py-16">
         <div className="grid md:grid-cols-2 gap-8">
-          {CATEGORIES.map((category) => (
+          {CATEGORIES.map((category: Category) => (
             <Link 
               key={category.id}
               href={`/categories/${category.slug}`}

@@ -7,14 +7,14 @@ const FEATURED_POSTS = [
     title: "The Majestic Taj Mahal at Sunrise",
     excerpt: "Experience the breathtaking beauty of India's most iconic monument in the golden morning light.",
     image: "https://images.unsplash.com/photo-1564507592333-c60657eea523?w=1200&auto=format&fit=crop&q=60",
-    slug: "taj-mahal-sunrise-guide"
+    slug: "agra"
   },
   {
     id: 2,
     title: "Kerala's Backwaters: A Serene Journey",
     excerpt: "Drift through the tranquil waterways of God's Own Country on traditional houseboats.",
     image: "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=1200&auto=format&fit=crop&q=60",
-    slug: "kerala-backwaters-guide"
+    slug: "kerala"
   }
 ];
 

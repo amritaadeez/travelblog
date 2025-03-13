@@ -8,7 +8,7 @@ const RECENT_POSTS = [
     excerpt: "Explore the perfect blend of Old and New Delhi, from historic monuments to modern markets.",
     image: "https://images.unsplash.com/photo-1587474260584-136574528ed5?w=1200&auto=format&fit=crop&q=60",
     date: "2024-03-15",
-    slug: "48-hours-delhi-guide"
+    slug: "delhi"
   },
   {
     id: 2,
@@ -16,15 +16,15 @@ const RECENT_POSTS = [
     excerpt: "Discover the majestic palaces, vibrant bazaars, and rich culture of Rajasthan's capital.",
     image: "https://images.unsplash.com/photo-1477587458883-47145ed94245?w=1200&auto=format&fit=crop&q=60",
     date: "2024-03-10",
-    slug: "jaipur-royal-heritage"
+    slug: "jaipur"
   },
   {
     id: 3,
     title: "Spiritual Journey Through Varanasi",
     excerpt: "Experience the mystical ghats, ancient temples, and sacred rituals of India's oldest city.",
-    image: "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=1200&auto=format&fit=crop&q=60",
+    image: "https://i.pinimg.com/736x/fe/b5/16/feb5165cdc7fc7f722726312c5d35db4.jpg",
     date: "2024-03-05",
-    slug: "varanasi-spiritual-journey"
+    slug: "varanasi"
   }
 ];
 

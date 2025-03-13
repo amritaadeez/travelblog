@@ -1,172 +1,273 @@
-'use client';
-import Image from 'next/image';
-import Link from 'next/link';
-import { useState } from 'react';
+"use client";
+import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react";
+import { Search, MapPin } from "lucide-react";
 
-const BLOG_POSTS = [
-  {
-    id: 1,
-    title: "A Weekend in Paris",
-    excerpt: "Experience the magic of the City of Light in just 48 hours.",
-    image: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=1200&auto=format&fit=crop&q=60",
-    date: "2024-03-15",
-    slug: "weekend-in-paris",
-    category: "City Guides"
-  },
-  {
-    id: 2,
-    title: "Japan's Cherry Blossom Season",
-    excerpt: "Your complete guide to experiencing sakura in Japan.",
-    image: "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=1200&auto=format&fit=crop&q=60",
-    date: "2024-03-10",
-    slug: "japan-cherry-blossom",
-    category: "Seasonal Travel"
-  },
-  {
-    id: 3,
-    title: "Hiking the Inca Trail",
-    excerpt: "A step-by-step guide to reaching Machu Picchu.",
-    image: "https://images.unsplash.com/photo-1587595431973-160d0d94add1?w=1200&auto=format&fit=crop&q=60",
-    date: "2024-03-05",
-    slug: "hiking-inca-trail",
-    category: "Adventure"
-  }
-];
+import { BLOG_POSTS } from "./data";
 
-const SUGGESTED_CLIPS = [
-  {
-    id: 1,
-    title: "Sunset in Santorini",
-    duration: "2:15",
-    thumbnail: "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=800&auto=format&fit=crop&q=60",
-  },
-  {
-    id: 2,
-    title: "Venice Canals",
-    duration: "1:45",
-    thumbnail: "https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?w=800&auto=format&fit=crop&q=60",
-  },
-  {
-    id: 3,
-    title: "Tokyo Streets",
-    duration: "3:00",
-    thumbnail: "https://images.unsplash.com/photo-1503899036084-c55cdd92da26?w=800&auto=format&fit=crop&q=60",
-  },
+const CATEGORIES = [
+  { name: "Sacred Places", count: 12 },
+  { name: "Nature Escapes", count: 8 },
+  { name: "Heritage", count: 15 },
+  { name: "Food & Culture", count: 10 },
+  { name: "Adventure", count: 7 },
+  { name: "City Guides", count: 9 },
 ];
 
 export default function BlogPage() {
-  const [searchQuery, setSearchQuery] = useState('');
-  
-  const filteredPosts = BLOG_POSTS.filter(post => 
-    post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    post.category.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [isSearchActive, setIsSearchActive] = useState(false);
+
+  const filteredPosts = BLOG_POSTS.filter((post) => {
+    const matchesSearch =
+      post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      post.category.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesCategory =
+      !selectedCategory || post.category === selectedCategory;
+    return matchesSearch && matchesCategory;
+  });
 
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <div className="relative h-[40vh] bg-gray-900">
+      <div
+        className={`relative w-full transition-all duration-500 ${
+          isSearchActive ? "h-[20vh]" : "h-screen"
+        }`}
+      >
         <Image
-          src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=1200&auto=format&fit=crop&q=60"
-          alt="Blog header"
+          src="https://images.unsplash.com/photo-1514222134-b57cbb8ce073?w=1800&auto=format&fit=crop&q=60"
+          alt="India Gate at sunset"
           fill
-          className="object-cover opacity-60"
+          className="object-cover"
+          priority
+          sizes="100vw"
+          quality={90}
         />
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="text-center text-white">
-            <h1 className="font-playfair text-5xl md:text-6xl font-bold mb-4">Travel Stories</h1>
-            <p className="font-montserrat text-xl text-gray-200">Adventures, guides, and travel inspiration</p>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/70" />
+
+        {/* Header Content */}
+        <div
+          className={`absolute inset-0 flex items-start transition-all duration-800 ${
+            isSearchActive ? "pt-24" : " pt-74"
+          }`}
+        >
+          <div
+            className={`container mx-auto px-4 transition-all duration-500 ${
+              isSearchActive
+                ? "flex justify-between items-center"
+                : "text-center"
+            }`}
+          >
+            {/* Title Section */}
+            <div
+              className={`transition-all duration-500 ${
+                isSearchActive ? "text-left" : "mx-auto mb-8"
+              }`}
+            >
+              <h1
+                className={` text-gray-200 font-bold transition-all duration-500 ${
+                  isSearchActive ? "text-4xl" : "text-6xl md:text-7xl mb-6"
+                }`}
+              >
+                Travel Stories
+              </h1>
+              {!isSearchActive && (
+                <p className="text-xl md:text-2xl mb-8 max-w-2xl mx-auto text-gray-200">
+                  Discover the vibrant culture, rich heritage, and breathtaking
+                  landscapes of India through our curated travel guides
+                </p>
+              )}
+            </div>
+
+            {/* Search Bar */}
+            <div
+              className={`transition-all duration-500 ${
+                isSearchActive ? "w-[400px]" : "max-w-xl mx-auto"
+              }`}
+            >
+              <div className="relative">
+                <input
+                  type="text"
+                  placeholder="Search stories..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onFocus={() => setIsSearchActive(true)}
+                  onBlur={() => !searchQuery && setIsSearchActive(false)}
+                  className="w-full px-6 py-4 pl-14 rounded-full 
+                    text-white placeholder-white/70 
+                    focus:outline-none focus:ring-2 focus:ring-white/50 transition-all
+                    bg-transparent border-2 border-white/30
+                    backdrop-blur-sm"
+                />
+                <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-white/70" />
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      <div className="container mx-auto px-4 py-16">
-        {/* Search Bar */}
-        <div className="max-w-2xl mx-auto mb-12">
-          <div className="relative">
-            <input
-              type="text"
-              placeholder="Search stories..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full px-4 py-3 pl-12 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            />
-            <svg
-              className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-              />
-            </svg>
-          </div>
-        </div>
-
-        {/* Suggested Clips */}
-        <div className="mb-16">
-          <h2 className="text-2xl font-bold mb-6">Suggested Clips</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {SUGGESTED_CLIPS.map((clip) => (
-              <div key={clip.id} className="relative group cursor-pointer">
-                <div className="relative h-48 rounded-lg overflow-hidden">
-                  <Image
-                    src={clip.thumbnail}
-                    alt={clip.title}
-                    fill
-                    className="object-cover transition-transform group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-colors" />
-                  <div className="absolute bottom-4 left-4 text-white">
-                    <h3 className="font-semibold">{clip.title}</h3>
-                    <span className="text-sm">{clip.duration}</span>
-                  </div>
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                    <svg className="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M8 5v14l11-7z" />
-                    </svg>
-                  </div>
-                </div>
-              </div>
+      {/* Categories and Blog Posts Section */}
+      <div
+        className={`max-w-7xl mx-auto px-4 py-16 transition-all duration-500 ${
+          isSearchActive ? "-mt-24" : ""
+        }`}
+      >
+        {/* Categories */}
+        <div className="mb-12">
+          <h2 className="text-2xl font-bold mb-6 text-gray-900">
+            Explore Categories
+          </h2>
+          <div className="flex flex-wrap gap-4">
+            {CATEGORIES.map((category) => (
+              <button
+                key={category.name}
+                onClick={() =>
+                  setSelectedCategory(
+                    selectedCategory === category.name ? "" : category.name
+                  )
+                }
+                className={`px-4 py-2 rounded-full text-sm whitespace-nowrap ${
+                  selectedCategory === category.name
+                    ? "bg-orange-500 text-white"
+                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                }`}
+              >
+                {category.name} ({category.count})
+              </button>
             ))}
           </div>
         </div>
 
-        {/* Blog Posts */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredPosts.map((post) => (
-            <article key={post.id} className="group">
-              <Link href={`/blog/${post.slug}`}>
-                <div className="relative h-64 mb-4 overflow-hidden rounded-lg">
-                  <Image
-                    src={post.image}
-                    alt={post.title}
-                    fill
-                    className="object-cover transition-transform group-hover:scale-105"
-                  />
-                </div>
-                <div className="font-montserrat text-sm text-blue-600 mb-2">{post.category}</div>
-                <time className="font-montserrat text-sm text-gray-500">
-                  {new Date(post.date).toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                  })}
-                </time>
-                <h2 className="font-playfair text-2xl font-bold mt-2 mb-2 group-hover:text-blue-600">
-                  {post.title}
-                </h2>
-                <p className="font-montserrat text-gray-600">
-                  {post.excerpt}
-                </p>
-              </Link>
-            </article>
-          ))}
-        </div>
+        {/* Blog Posts Grid with No Results State */}
+        {filteredPosts.length > 0 ? (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filteredPosts.map((post) => (
+              <article
+                key={post.id}
+                className="group bg-white rounded-lg overflow-hidden shadow-lg"
+              >
+                <Link href={`/blog/${post.slug}`}>
+                  <div className="relative h-64 overflow-hidden">
+                    <Image
+                      src={post.image}
+                      alt={post.title}
+                      fill
+                      className="object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
+                  </div>
+                  <div className="p-6">
+                    <div className="flex items-center gap-4 mb-4">
+                      <div className="relative w-10 h-10 rounded-full overflow-hidden">
+                        <Image
+                          src={post.author.avatar}
+                          alt={post.author.name}
+                          fill
+                          className="object-cover"
+                        />
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-gray-900">
+                          {post.author.name}
+                        </p>
+                        <p className="text-sm text-gray-500">{post.readTime}</p>
+                      </div>
+                    </div>
+                    <h3 className="text-xl font-bold mb-2 group-hover:text-orange-500 transition-colors">
+                      {post.title}
+                    </h3>
+                    <p className="text-gray-600 mb-4">{post.excerpt}</p>
+                    <div className="flex items-center justify-between">
+                      <span className="inline-block bg-orange-100 text-orange-800 text-xs px-3 py-1 rounded-full">
+                        {post.category}
+                      </span>
+                      <span className="text-sm text-gray-500">{post.date}</span>
+                    </div>
+                  </div>
+                </Link>
+              </article>
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-16 px-4">
+            <div className="relative w-48 h-48 mx-auto mb-8">
+              <Image
+                src="/no-results.svg" // You'll need to add this illustration
+                alt="No results found"
+                fill
+                className="object-contain"
+              />
+            </div>
+
+            <h3 className="text-2xl font-bold text-gray-900 mb-3">
+              Oops! No Adventures Found
+            </h3>
+
+            <p className="text-gray-600 mb-8 max-w-md mx-auto">
+              We couldn't find any stories matching "{searchQuery}". Try
+              adjusting your search or explore our suggestions below.
+            </p>
+
+            {/* Quick Suggestions */}
+            <div className="max-w-2xl mx-auto">
+              <h4 className="text-sm font-semibold text-gray-500 mb-4">
+                POPULAR SEARCHES
+              </h4>
+              <div className="flex flex-wrap justify-center gap-3">
+                {[
+                  "Heritage Sites",
+                  "Food Trails",
+                  "Wildlife",
+                  "Beaches",
+                  "Mountains",
+                ].map((suggestion) => (
+                  <button
+                    key={suggestion}
+                    onClick={() => setSearchQuery(suggestion)}
+                    className="px-4 py-2 rounded-full text-sm border border-orange-200 
+                      text-orange-600 hover:bg-orange-50 transition-colors
+                      flex items-center gap-2"
+                  >
+                    <MapPin className="w-4 h-4" />
+                    {suggestion}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Random Destinations */}
+            <div className="mt-12">
+              <h4 className="text-sm font-semibold text-gray-500 mb-6">
+                YOU MIGHT BE INTERESTED IN
+              </h4>
+              <div className="grid md:grid-cols-3 gap-6 max-w-3xl mx-auto">
+                {BLOG_POSTS.slice(0, 3).map((post) => (
+                  <div key={post.id} className="group">
+                    <div className="relative h-48 rounded-lg overflow-hidden mb-3">
+                      <Image
+                        src={post.image}
+                        alt={post.title}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                      <div className="absolute bottom-3 left-3 right-3">
+                        <span className="text-white text-sm font-medium">
+                          {post.category}
+                        </span>
+                      </div>
+                    </div>
+                    <h5 className="font-medium text-gray-900 group-hover:text-orange-600 transition-colors">
+                      {post.title}
+                    </h5>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
