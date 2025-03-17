@@ -184,7 +184,8 @@ export default function BlogPage() {
                     <p className="text-gray-900 mb-4">{post.excerpt}</p>
                     <div className="flex items-center text-gray-900">
                       <MapPin className="w-4 h-4 mr-2" />
-                      <span className="text-sm">{post.location}</span>
+                      
+                      <span className="text-sm">{post.category}</span>
                     </div>
                   </div>
                 </Link>
