@@ -124,13 +124,13 @@ export default function Hero() {
             heritage
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4 sm:space-x-4 animate-fade-in-delay-2 w-full sm:w-auto">
-            <Link
+            <Link style={{lineHeight: '2'}}
               href="/blog"
               className="w-full sm:w-[200px] px-8 py-3 bg-orange-500 text-white rounded-full font-semibold hover:bg-orange-600 transition-colors text-center"
             >
               Explore Cities
             </Link>
-            <Link
+            <Link style={{lineHeight: '1.8'}}
               href="/categories"
               className="w-full sm:w-[200px] px-8 py-3 bg-transparent border-2 border-white text-white rounded-full font-semibold hover:bg-white/10 transition-colors text-center"
             >

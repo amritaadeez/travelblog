@@ -57,7 +57,7 @@ export default function MobileMenu({ isOpen, setIsOpen }: MobileMenuProps) {
                 </button>
               </div>
               <div className="px-4 py-2">
-                {['blog', 'categories', 'about'].map((item) => (
+                {['blog', 'categories', 'about', 'contact'].map((item) => (
                   <Link
                     key={item}
                     href={`/${item}`}

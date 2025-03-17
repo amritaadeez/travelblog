@@ -4,6 +4,8 @@ import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { useScroll } from '@/hooks/useScroll';
 import MobileMenu from './MobileMenu';
+import Image from 'next/image';
+import Logo from '@/app/logo.png';
 
 const NAV_ITEMS = [
   { label: 'Blog', path: '/blog' },
@@ -65,7 +67,14 @@ export default function Navbar() {
       <nav className={styles.nav}>
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center h-16">
-            <Link href="/" className={`${styles.logo} hover:opacity-80 transition-opacity`}>
+            <Link href="/" className={`${styles.logo} hover:opacity-80 transition-opacity flex items-center gap-2`}>
+              <Image 
+                src={Logo}
+                alt="Hidden India Logo" 
+                width={32} 
+                height={32}
+                className="object-contain"
+              />
               Hidden India
             </Link>
             
@@ -105,9 +114,7 @@ export default function Navbar() {
       </nav>
       <MobileMenu 
         isOpen={isMobileMenuOpen} 
-        onClose={() => setIsMobileMenuOpen(false)} 
-        items={NAV_ITEMS}
-        currentPath={pathname}
+        setIsOpen={setIsMobileMenuOpen}
       />
     </>
   );
