@@ -129,7 +129,7 @@ export default function BlogPage() {
 
       {/* Categories and Blog Posts Section */}
       <div
-        id="categories-section"
+        id="categories-section" style={{background:'white'}}
         className={`max-w-7xl mx-auto px-4 py-16 transition-all duration-500 ${
           isSearchActive ? "-mt-24" : ""
         }`}
