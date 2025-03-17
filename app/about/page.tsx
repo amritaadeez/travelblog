@@ -7,7 +7,7 @@ export default function AboutPage() {
       {/* Hero Section */}
       <div className="relative h-[70vh]">
         <Image
-          src="https://images.unsplash.com/photo-1598324789736-4861f89564a0?w=1200"
+          src="https://images.unsplash.com/photo-1532375810709-75b1da00537c?w=1200"
           alt="Indian culture"
           fill
           className="object-cover"
@@ -38,10 +38,10 @@ export default function AboutPage() {
           </div>
           <div className="relative h-[400px] rounded-lg overflow-hidden">
             <Image
-              src="https://images.unsplash.com/photo-1623069923531-fd9c2d3c6c35?w=1200"
+              src="https://i.pinimg.com/736x/00/20/d8/0020d8e4f4193adfa6afd3f4a3f47aba.jpg"
               alt="Traditional Indian culture"
               fill
-              className="object-cover"
+              className=" hover:scale-105 transition-transform duration-700"
             />
           </div>
         </div>
@@ -53,7 +53,7 @@ export default function AboutPage() {
             <div className="bg-white p-6 rounded-lg shadow-lg">
               <div className="relative h-48 mb-4 rounded-lg overflow-hidden">
                 <Image
-                  src="https://images.unsplash.com/photo-1604873343857-62ba54ce9982?w=1200"
+                  src="https://i.pinimg.com/736x/80/27/2b/80272baa564e1a52a7fb172523882dc0.jpg"
                   alt="Cultural experiences"
                   fill
                   className="object-cover"

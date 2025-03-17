@@ -77,7 +77,7 @@ export default function Navbar() {
                 height={32}
                 className="object-contain"
               />
-              Hidden India
+              <span className="md:inline">Hidden India</span>
             </Link>
             
             <div className="hidden md:flex items-center space-x-2">

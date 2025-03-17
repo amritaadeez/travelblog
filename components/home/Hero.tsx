@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import ScrollDownIndicator from "../common/ScrollDownIndicator";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 const HERO_IMAGES = [
   {
@@ -42,22 +42,25 @@ export default function Hero() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setIsTransitioning(true);
-      setTimeout(() => {
-        setCurrentImageIndex((prevIndex) =>
-          prevIndex === HERO_IMAGES.length - 1 ? 0 : prevIndex + 1
-        );
-        setIsTransitioning(false);
-      }, 500); // Match this with the transition duration in CSS
-    }, 5000); // Change image every 5 seconds
+  const goToNextSlide = useCallback(() => {
+    if (isTransitioning) return;
+    
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setCurrentImageIndex((prevIndex) =>
+        prevIndex === HERO_IMAGES.length - 1 ? 0 : prevIndex + 1
+      );
+      setIsTransitioning(false);
+    }, 500);
+  }, [isTransitioning]);
 
+  useEffect(() => {
+    const interval = setInterval(goToNextSlide, 5000);
     return () => clearInterval(interval);
-  }, []);
+  }, [goToNextSlide]);
 
   return (
-    <div className="relative h-screen w-full">
+    <div className="relative h-screen w-full overflow-hidden">
       {/* Background Images */}
       {HERO_IMAGES.map((image, index) => (
         <div
@@ -66,13 +69,13 @@ export default function Hero() {
             ${currentImageIndex === index ? "opacity-100" : "opacity-0"}`}
         >
           <Image
-            src={`${image.url}?w=1920&auto=format&fit=crop&q=100`}
+            src={image.url}
             alt={image.alt}
             fill
             className="object-cover object-center"
             priority={index === 0}
             sizes="100vw"
-            quality={100}
+            quality={90}
           />
         </div>
       ))}
@@ -80,18 +83,31 @@ export default function Hero() {
       {/* Gradient Overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/70" />
 
+      {/* Progress Bar */}
+      <div className="absolute bottom-0 left-0 right-0 h-1 bg-white/20">
+        <div 
+          className="h-full bg-orange-500 transition-all duration-500"
+          style={{ width: `${((currentImageIndex + 1) / HERO_IMAGES.length) * 100}%` }}
+        />
+      </div>
+
       {/* Location Indicator */}
-      <div className="absolute top-32 left-8 text-white/90 font-light">
+      <div className="absolute md:top-8 md:left-8 bottom-8 left-8 text-white/90 font-light">
         <div className="flex items-center space-x-2">
-          <div className="w-2 h-2 bg-orange-500 rounded-full animate-pulse" />
-          <span className="text-lg">
-            {HERO_IMAGES[currentImageIndex].location}
-          </span>
+          <svg 
+            xmlns="http://www.w3.org/2000/svg" 
+            viewBox="0 0 24 24" 
+            fill="currentColor" 
+            className="w-5 h-5 text-orange-500"
+          >
+            <path fillRule="evenodd" d="M11.54 22.351l.07.04.028.016a.76.76 0 00.723 0l.028-.015.071-.041a16.975 16.975 0 001.144-.742 19.58 19.58 0 002.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 00-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 002.682 2.282 16.975 16.975 0 001.145.742zM12 13.5a3 3 0 100-6 3 3 0 000 6z" clipRule="evenodd" />
+          </svg>
+          <span className="text-lg">{HERO_IMAGES[currentImageIndex].location}</span>
         </div>
       </div>
 
-      {/* Image Navigation Dots */}
-      <div className="absolute bottom-32 left-1/2 transform -translate-x-1/2 flex space-x-2">
+      {/* Image Navigation Dots - Hide on mobile */}
+      <div className="absolute bottom-32 left-1/2 transform -translate-x-1/2 hidden md:flex space-x-2">
         {HERO_IMAGES.map((_, index) => (
           <button
             key={index}
@@ -124,13 +140,13 @@ export default function Hero() {
             heritage
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4 sm:space-x-4 animate-fade-in-delay-2 w-full sm:w-auto">
-            <Link style={{lineHeight: '2'}}
+            <Link
               href="/blog"
               className="w-full sm:w-[200px] px-8 py-3 bg-orange-500 text-white rounded-full font-semibold hover:bg-orange-600 transition-colors text-center"
             >
               Explore Cities
             </Link>
-            <Link style={{lineHeight: '1.8'}}
+            <Link
               href="/categories"
               className="w-full sm:w-[200px] px-8 py-3 bg-transparent border-2 border-white text-white rounded-full font-semibold hover:bg-white/10 transition-colors text-center"
             >
@@ -156,8 +172,8 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Popular Destinations Carousel */}
-      <div className="absolute bottom-20 left-0 right-0 px-4">
+      {/* Popular Destinations Carousel - Hide on mobile */}
+      <div className="absolute bottom-20 left-0 right-0 px-4 hidden md:block">
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {/* Delhi Card */}
@@ -255,8 +271,9 @@ export default function Hero() {
         </div>
       </div>
 
-      <div className="absolute bottom-4 left-0 right-0">
-        <ScrollDownIndicator className="bottom-0" />
+      {/* Explore More Button - Centered on all screens */}
+      <div className="absolute bottom-8 left-0 right-0 flex justify-center">
+        <ScrollDownIndicator />
       </div>
     </div>
   );

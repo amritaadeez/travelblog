@@ -1,25 +1,8 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
-interface ScrollDownIndicatorProps {
-  className?: string;
-}
-
-export default function ScrollDownIndicator({ className = '' }: ScrollDownIndicatorProps) {
+export default function ScrollDownIndicator({ className = '' }) {
   const [isVisible, setIsVisible] = useState(true);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 100) {
-        setIsVisible(false);
-      } else {
-        setIsVisible(true);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   const scrollToContent = () => {
     window.scrollTo({
@@ -33,7 +16,7 @@ export default function ScrollDownIndicator({ className = '' }: ScrollDownIndica
       {isVisible && (
         <button
           onClick={scrollToContent}
-          className={`absolute left-1/2 -translate-x-1/2 text-white animate-bounce ${className}`}
+          className="text-white animate-bounce"
           aria-label="Scroll down"
         >
           <div className="flex flex-col items-center">
