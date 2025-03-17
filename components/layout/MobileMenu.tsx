@@ -62,7 +62,7 @@ export default function MobileMenu({ isOpen, setIsOpen }: MobileMenuProps) {
                       height={32}
                       className="object-contain"
                     />
-                    <span className="font-semibold text-xl">Hidden India</span>
+                    <span className="font-semibold text-xl orange-text">Hidden India</span>
                   </div>
                 </div>
 
