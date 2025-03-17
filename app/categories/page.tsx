@@ -18,11 +18,11 @@ export default function CategoriesPage() {
   const router = useRouter();
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen pb-20 bg-white">
       {/* Back Button */}
     
       {/* Hero Section */}
-      <div className="relative h-[40vh] bg-gray-900">
+      <div className="relative h-[50vh] bg-gray-900">
         <Image
           src="https://images.unsplash.com/photo-1519055548599-6d4d129508c4?w=1200&auto=format&fit=crop&q=60"
           alt="Categories header"

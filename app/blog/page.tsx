@@ -7,12 +7,12 @@ import { Search, MapPin } from "lucide-react";
 import { BLOG_POSTS } from "./data";
 
 const CATEGORIES = [
-  { name: "Sacred Places", count: 12 },
-  { name: "Nature Escapes", count: 8 },
-  { name: "Heritage", count: 15 },
-  { name: "Food & Culture", count: 10 },
-  { name: "Adventure", count: 7 },
-  { name: "City Guides", count: 9 },
+  { name: "Sacred Places", count: 1 },     
+  { name: "Nature Escapes", count: 1 },    
+  { name: "Heritage", count: 2 },          
+  { name: "Food & Culture", count: 1 },  
+  { name: "Adventure", count: 0 },    
+  { name: "City Guides", count: 0 },       
 ];
 
 export default function BlogPage() {
@@ -30,11 +30,11 @@ export default function BlogPage() {
   });
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen ">
       {/* Hero Section */}
       <div
         className={`relative w-full transition-all duration-500 ${
-          isSearchActive ? "h-[20vh]" : "h-screen"
+          isSearchActive ? "h-[20vh]" : "min-h-screen"
         }`}
       >
         <Image
@@ -51,7 +51,7 @@ export default function BlogPage() {
         {/* Header Content */}
         <div
           className={`absolute inset-0 flex items-start transition-all duration-800 ${
-            isSearchActive ? "pt-24" : " pt-74"
+            isSearchActive ? "pt-24" : " pt-72"
           }`}
         >
           <div

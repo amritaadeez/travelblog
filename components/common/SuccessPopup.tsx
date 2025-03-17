@@ -16,7 +16,7 @@ const FEATURED_DESTINATIONS = [
   },
   {
     name: "Varanasi Ghats",
-    image: "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=800&auto=format&fit=crop&q=60",
+    image: "https://images.unsplash.com/photo-1561359313-0639aad49ca6?w=800&auto=format&fit=crop&q=60",
     description: "Experience spiritual awakening at the holy Ganges"
   },
   {

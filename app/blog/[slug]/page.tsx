@@ -39,7 +39,7 @@ const CITY_THEMES = {
         description:
           "Built to commemorate the visit of King George V and Queen Mary, this iconic arch monument stands as a symbol of Mumbai's colonial heritage. The last British troops departed through this gateway after India's independence.",
         image:
-          "https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=1200",
+          "https://images.unsplash.com/photo-1625731226721-b4d51ae70e20?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         location: "Apollo Bunder, Colaba",
         visitingHours: "24 hours",
         bestTime: "Early morning or sunset",
@@ -49,7 +49,7 @@ const CITY_THEMES = {
         description:
           "This 3.6-kilometer-long boulevard features an Art Deco promenade and is nicknamed the 'Queen's Necklace' for its glittering nighttime view. The curved coastline, lined with palm trees and heritage buildings, offers stunning views of the Arabian Sea.",
         image:
-          "https://images.unsplash.com/photo-1580581096469-8afb38d3dbd9?w=1200",
+          "https://images.unsplash.com/photo-1567870374047-3f9db5c06b16?w=1200",
         location: "Nariman Point to Malabar Hill",
         visitingHours: "24 hours",
         bestTime: "Evening for sunset views",
@@ -59,7 +59,7 @@ const CITY_THEMES = {
         description:
           "One of Asia's largest urban settlements, Dharavi is a testament to human resilience and entrepreneurial spirit. This vibrant community hosts numerous small-scale industries and showcases the city's innovative spirit.",
         image:
-          "https://images.unsplash.com/photo-1488181356925-f62276544340?w=1200",
+          "https://images.unsplash.com/photo-1725122902462-ccbf3aa4d79c?w=1200",
         location: "Central Mumbai",
         visitingHours: "Guided tours available",
         bestTime: "Morning hours",
@@ -308,7 +308,7 @@ const CITY_THEMES = {
       {
         name: "Dashashwamedh Ghat",
         description: "Famous for its spectacular Ganga Aarti ceremony",
-        image: "https://images.unsplash.com/photo-1567516328339-3ceebac12925?w=1200",
+        image: "https://images.unsplash.com/photo-1738151466865-32200afe9cf1?w=1200",
         location: "Main Ghat",
         visitingHours: "24 hours",
         bestTime: "Evening for Aarti"
@@ -316,7 +316,7 @@ const CITY_THEMES = {
       {
         name: "Kashi Vishwanath Temple",
         description: "One of the most famous Hindu temples",
-        image: "https://images.unsplash.com/photo-1627894006066-b45796ade85d?w=1200",
+        image: "https://i.pinimg.com/736x/76/14/53/761453bb4d6a56407b68b452686d8860.jpg",
         location: "Vishwanath Gali",
         visitingHours: "4 AM - 11 PM",
         bestTime: "Early morning"
@@ -324,7 +324,7 @@ const CITY_THEMES = {
       {
         name: "Sarnath",
         description: "Buddhist pilgrimage site",
-        image: "https://images.unsplash.com/photo-1623677375459-4268f864d0c6?w=1200",
+        image: "https://i.pinimg.com/736x/2d/8d/32/2d8d321788a4634b17da1d768c031264.jpg",
         location: "Sarnath",
         visitingHours: "9 AM - 5 PM",
         bestTime: "Morning hours"
@@ -343,7 +343,7 @@ const CITY_THEMES = {
       {
         name: "Banarasi Paan",
         description: "Traditional betel leaf delicacy",
-        image: "https://images.unsplash.com/photo-1628100525753-947aa11d0925?w=1200",
+        image: "https://i.pinimg.com/736x/e4/35/f1/e435f196561ec62541265108fa4ccdee.jpg",
         bestPlaces: ["No data available"],
         price: "₹20-50"
       },
@@ -414,7 +414,7 @@ const CITY_THEMES = {
       {
         name: "Alleppey Backwaters",
         description: "Network of lagoons, lakes, and canals parallel to the Arabian Sea coast",
-        image: "https://images.unsplash.com/photo-1593693397690-362cb9666fc2?w=1200",
+        image: "https://i.pinimg.com/736x/2f/1d/80/2f1d807dff41d1787dbf42a1db99fa1c.jpg",
         location: "Alleppey",
         visitingHours: "24 hours",
         bestTime: "October to March"
@@ -422,7 +422,7 @@ const CITY_THEMES = {
       {
         name: "Munnar Tea Gardens",
         description: "Vast expanses of tea plantations in the Western Ghats",
-        image: "https://images.unsplash.com/photo-1582531325807-cc8fb4fa6df9?w=1200",
+        image: "http://i.pinimg.com/736x/fd/f6/b3/fdf6b38870e1ef0fb9d59de564f7c220.jpg",
         location: "Munnar",
         visitingHours: "9 AM - 5 PM",
         bestTime: "September to March"
@@ -430,7 +430,7 @@ const CITY_THEMES = {
       {
         name: "Fort Kochi",
         description: "Historic coastal area with colonial architecture",
-        image: "https://images.unsplash.com/photo-1590050752117-2c9a54a2464b?w=1200",
+        image: "https://i.pinimg.com/736x/06/f4/76/06f476de9fe166935ec822b89387c33b.jpg",
         location: "Kochi",
         visitingHours: "24 hours",
         bestTime: "October to March"
@@ -456,14 +456,14 @@ const CITY_THEMES = {
       {
         name: "Kerala Sadhya",
         description: "Traditional vegetarian feast served on banana leaf",
-        image: "https://images.unsplash.com/photo-1590050752117-2c9a54a2464b?w=1200",
+        image: "https://i.pinimg.com/736x/5f/1c/1e/5f1c1ebe6b59f41f5cb10335e5f4c187.jpg",
         bestPlaces: ["Traditional homes", "Local restaurants"],
         price: "₹200-500"
       },
       {
         name: "Malabar Biryani",
         description: "Aromatic rice dish with distinctive Kerala spices",
-        image: "https://images.unsplash.com/photo-1590050752117-2c9a54a2464b?w=1200",
+        image: "https://i.pinimg.com/736x/02/26/6d/02266d49ae2906271557e9ffcc1d3dff.jpg",
         bestPlaces: ["Paragon Restaurant", "Rahmath Hotel"],
         price: "₹250-400"
       }
@@ -538,7 +538,7 @@ const CITY_THEMES = {
       {
         name: "Red Fort",
         description: "UNESCO World Heritage site and symbol of India's sovereignty",
-        image: "https://images.unsplash.com/photo-1585135497273-1a86b09fe70e?w=1200",
+        image: "https://images.unsplash.com/photo-1602230349009-82f740989e4c?w=1200",
         location: "Old Delhi",
         visitingHours: "9:30 AM - 4:30 PM",
         bestTime: "Early morning"
@@ -546,7 +546,7 @@ const CITY_THEMES = {
       {
         name: "Qutub Minar",
         description: "UNESCO site featuring the world's tallest brick minaret",
-        image: "https://images.unsplash.com/photo-1548013146-72479768bada?w=1200",
+        image: "https://images.unsplash.com/photo-1584283092096-4a48b7d822a2?w=1200",
         location: "Mehrauli",
         visitingHours: "7 AM - 5 PM",
         bestTime: "Sunset"
@@ -554,7 +554,7 @@ const CITY_THEMES = {
       {
         name: "Humayun's Tomb",
         description: "Magnificent Mughal architecture that inspired the Taj Mahal",
-        image: "https://images.unsplash.com/photo-1607836046730-3317bd58a31b?w=1200",
+        image: "https://images.unsplash.com/photo-1646938691456-a03d01a8276a?w=1200",
         location: "Nizamuddin East",
         visitingHours: "6 AM - 6 PM",
         bestTime: "Morning"
@@ -587,7 +587,7 @@ const CITY_THEMES = {
       {
         name: "Paranthe Wali Gali",
         description: "Famous street food lane known for stuffed flatbreads",
-        image: "https://images.unsplash.com/photo-1604999333679-b86d54738315?w=1200",
+        image: "https://i.pinimg.com/736x/2e/79/36/2e79363dede11eb3cb54725878ef2fa9.jpg",
         bestPlaces: ["Old Delhi", "Chandni Chowk"],
         price: "₹50-150"
       }
@@ -647,6 +647,140 @@ const CITY_THEMES = {
           name: "Hotel Palace Heights",
           area: "Karol Bagh",
           priceRange: "₹2,000-4,000"
+        }
+      ]
+    }
+  },
+  agra: {
+    primaryColor: "from-amber-100 to-orange-600",
+    accentColor: "text-orange-500",
+    title: "Agra: City of the Taj Mahal",
+    subtitle: "Where Love is Set in Stone",
+    headerImage: "https://images.unsplash.com/photo-1564507592333-c60657eea523?w=1200",
+    description: "Agra, home to the iconic Taj Mahal, is a city steeped in Mughal history and architectural splendor. Once the capital of the Mughal Empire, today it stands as a testament to India's rich cultural heritage and architectural magnificence.",
+    history: {
+      title: "Historical Journey",
+      content: "Agra rose to prominence as the capital of the Mughal Empire in the 16th century. The city witnessed its golden age under emperors Akbar, Jahangir, and Shah Jahan, who built some of India's most magnificent monuments including the Taj Mahal, Agra Fort, and Fatehpur Sikri.",
+      timeline: [
+        { year: "1526", event: "Babur establishes Mughal rule in Agra" },
+        { year: "1565", event: "Akbar begins construction of Agra Fort" },
+        { year: "1632", event: "Construction of Taj Mahal begins" },
+        { year: "1648", event: "Taj Mahal completion" }
+      ]
+    },
+    culturalSpots: [
+      {
+        name: "Taj Mahal",
+        description: "UNESCO World Heritage site and symbol of eternal love",
+        image: "https://images.unsplash.com/photo-1564507592333-c60657eea523?w=1200",
+        location: "Tajganj",
+        visitingHours: "Sunrise to Sunset (Closed on Fridays)",
+        bestTime: "Sunrise or Sunset"
+      },
+      {
+        name: "Agra Fort",
+        description: "UNESCO site showcasing Mughal military architecture",
+        image: "https://images.unsplash.com/photo-1548013146-72479768bada?w=1200",
+        location: "Rakabganj",
+        visitingHours: "6 AM - 6 PM",
+        bestTime: "Early morning"
+      },
+      {
+        name: "Fatehpur Sikri",
+        description: "Ancient capital city built by Emperor Akbar",
+        image: "https://images.unsplash.com/photo-1592555793101-4735dfe82341?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        location: "Fatehpur Sikri",
+        visitingHours: "6 AM - 6 PM",
+        bestTime: "Morning or late afternoon"
+      }
+    ],
+    festivals: [
+      {
+        name: "Taj Mahotsav",
+        description: "Annual cultural festival celebrating arts and crafts",
+        timing: "February",
+        duration: "10 days",
+        highlights: ["Craft exhibitions", "Cultural performances", "Food festival"]
+      },
+      {
+        name: "Ram Barat",
+        description: "Traditional wedding procession of Lord Ram",
+        timing: "October-November",
+        duration: "3 days",
+        highlights: ["Wedding procession", "Religious ceremonies", "Cultural events"]
+      }
+    ],
+    cuisine: [
+      {
+        name: "Petha",
+        description: "Famous sweet made from ash gourd",
+        image: "https://i.pinimg.com/736x/8a/72/a6/8a72a611a371ba9fbe28e3d3d4fc0f18.jpg",
+        bestPlaces: ["Panchhi Petha", "Gopal Das Petha"],
+        price: "₹200-400/kg"
+      },
+      {
+        name: "Bedai",
+        description: "Local breakfast of deep-fried bread with spicy curry",
+        image: "https://i.pinimg.com/736x/63/73/d8/6373d8199975e942bcc8dc1e419845c2.jpg",
+        bestPlaces: ["Ram Babu Paratha", "Joney's Place"],
+        price: "₹30-50"
+      }
+    ],
+    transportation: {
+      title: "Getting Around",
+      options: [
+        {
+          mode: "Auto Rickshaw",
+          description: "Most common mode of transport",
+          tips: "Fix price before starting journey"
+        },
+        {
+          mode: "E-Rickshaw",
+          description: "Eco-friendly option for short distances",
+          tips: "Available near major tourist spots"
+        },
+        {
+          mode: "Tourist Buses",
+          description: "Organized tours covering major attractions",
+          tips: "Book through government approved operators"
+        }
+      ]
+    },
+    accommodation: {
+      luxury: [
+        {
+          name: "The Oberoi Amarvilas",
+          area: "Taj East Gate Road",
+          priceRange: "₹30,000+"
+        },
+        {
+          name: "ITC Mughal",
+          area: "Fatehabad Road",
+          priceRange: "₹15,000+"
+        }
+      ],
+      midRange: [
+        {
+          name: "Crystal Sarovar Premiere",
+          area: "Fatehabad Road",
+          priceRange: "₹5,000-8,000"
+        },
+        {
+          name: "Howard Plaza The Fern",
+          area: "Fatehabad Road",
+          priceRange: "₹3,000-6,000"
+        }
+      ],
+      budget: [
+        {
+          name: "Hotel Sidhartha",
+          area: "Taj Ganj",
+          priceRange: "₹1,000-2,500"
+        },
+        {
+          name: "Tourist Rest House",
+          area: "Mall Road",
+          priceRange: "₹800-2,000"
         }
       ]
     }

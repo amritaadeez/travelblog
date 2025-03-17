@@ -10,8 +10,10 @@ export default function ContactPage() {
           src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&auto=format&fit=crop&q=60"
           alt="Contact header"
           fill
-          className="object-cover opacity-60"
+          className="object-cover"
+          priority
         />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/70" />
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="text-center text-white">
             <h1 className="font-playfair text-5xl md:text-6xl font-bold mb-4">Contact Us</h1>

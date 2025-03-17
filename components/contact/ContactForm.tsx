@@ -5,7 +5,7 @@ import SuccessPopup from '@/components/common/SuccessPopup';
 
 // Validation schema
 const formSchema = z.object({
-  name: z.string()
+  firstName: z.string()
     .min(2, 'Name must be at least 2 characters')
     .max(50, 'Name must be less than 50 characters'),
   email: z.string()
@@ -22,7 +22,7 @@ type FormData = z.infer<typeof formSchema>;
 
 export default function ContactForm() {
   const [formData, setFormData] = useState<FormData>({
-    name: '',
+    firstName: '',
     email: '',
     subject: '',
     message: ''
@@ -100,16 +100,29 @@ export default function ContactForm() {
     setStatus('loading');
 
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // Replace with your API endpoint
+      const response = await fetch('https://portfolio-backend-2994.onrender.com/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          // Add any additional headers your API requires
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to send message');
+      }
+
+      const data = await response.json();
+
       setStatus('success');
-      setFormData({ name: '', email: '', subject: '', message: '' });
+      setFormData({ firstName: '', email: '', subject: '', message: '' });
       setTouched({});
       setErrors({});
       setIsSuccessPopupOpen(true);
-      
-      // Don't automatically reset status since we're showing popup
     } catch (error) {
+      console.error('Error sending message:', error);
       setStatus('error');
       setTimeout(() => setStatus('idle'), 3000);
     }
@@ -135,29 +148,29 @@ export default function ContactForm() {
     <>
       <form onSubmit={handleSubmit} className="space-y-6" noValidate>
         <div>
-          <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+          <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-1">
             Name
           </label>
           <div className="relative">
             <input
               type="text"
-              id="name"
-              name="name"
-              value={formData.name}
+              id="firstName"
+              name="firstName"
+              value={formData.firstName}
               onChange={handleChange}
               onBlur={handleBlur}
               required
-              className={getInputClassName('name')}
+              className={getInputClassName('firstName')}
               placeholder="Your name"
             />
-            {touched.name && !errors.name && (
+            {touched.firstName && !errors.firstName && (
               <svg className="absolute right-3 top-1/2 -translate-y-1/2 h-5 w-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
             )}
           </div>
-          {touched.name && errors.name && (
-            <p className="mt-1 text-sm text-red-600">{errors.name}</p>
+          {touched.firstName && errors.firstName && (
+            <p className="mt-1 text-sm text-red-600">{errors.firstName}</p>
           )}
         </div>
 
