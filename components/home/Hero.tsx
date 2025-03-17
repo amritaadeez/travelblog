@@ -141,7 +141,7 @@ export default function Hero() {
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4 sm:space-x-4 animate-fade-in-delay-2 w-full sm:w-auto">
             <Link
-              href="/blog"
+              href="/states"
               className="w-full sm:w-[200px] px-8 py-3 bg-orange-500 text-white rounded-full font-semibold hover:bg-orange-600 transition-colors text-center"
             >
               Explore Cities

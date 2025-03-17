@@ -9,6 +9,7 @@ import Logo from '@/app/logo.png';
 
 const NAV_ITEMS = [
   { label: 'Blog', path: '/blog' },
+  { label: 'States', path: '/states' },
   { label: 'Categories', path: '/categories' },
   { label: 'About', path: '/about' },
   { label: 'Contact', path: '/contact' }

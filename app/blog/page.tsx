@@ -151,7 +151,7 @@ export default function BlogPage() {
                 className={`px-4 py-2 rounded-full text-sm whitespace-nowrap ${
                   selectedCategory === category.name
                     ? "bg-orange-500 text-white"
-                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                    : "bg-gray-100 text-gray-900 hover:bg-gray-200"
                 }`}
               >
                 {category.name} ({category.count})
@@ -160,7 +160,7 @@ export default function BlogPage() {
           </div>
         </div>
 
-        {/* Blog Posts Grid with No Results State */}
+        {/* Blog Posts Grid */}
         {filteredPosts.length > 0 ? (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredPosts.map((post) => (
@@ -178,31 +178,13 @@ export default function BlogPage() {
                     />
                   </div>
                   <div className="p-6">
-                    <div className="flex items-center gap-4 mb-4">
-                      <div className="relative w-10 h-10 rounded-full overflow-hidden">
-                        <Image
-                          src={post.author.avatar}
-                          alt={post.author.name}
-                          fill
-                          className="object-cover"
-                        />
-                      </div>
-                      <div>
-                        <p className="text-sm font-medium text-gray-900">
-                          {post.author.name}
-                        </p>
-                        <p className="text-sm text-gray-500">{post.readTime}</p>
-                      </div>
-                    </div>
-                    <h3 className="text-xl font-bold mb-2 group-hover:text-orange-500 transition-colors">
+                    <h3 className="text-xl font-bold mb-2 text-gray-900">
                       {post.title}
                     </h3>
-                    <p className="text-gray-600 mb-4">{post.excerpt}</p>
-                    <div className="flex items-center justify-between">
-                      <span className="inline-block bg-orange-100 text-orange-800 text-xs px-3 py-1 rounded-full">
-                        {post.category}
-                      </span>
-                      <span className="text-sm text-gray-500">{post.date}</span>
+                    <p className="text-gray-900 mb-4">{post.excerpt}</p>
+                    <div className="flex items-center text-gray-900">
+                      <MapPin className="w-4 h-4 mr-2" />
+                      <span className="text-sm">{post.location}</span>
                     </div>
                   </div>
                 </Link>
@@ -210,81 +192,8 @@ export default function BlogPage() {
             ))}
           </div>
         ) : (
-          <div className="text-center py-16 px-4">
-            <div className="relative w-48 h-48 mx-auto mb-8">
-              <Image
-                src="/no-results.svg" // You'll need to add this illustration
-                alt="No results found"
-                fill
-                className="object-contain"
-              />
-            </div>
-
-            <h3 className="text-2xl font-bold text-gray-900 mb-3">
-              Oops! No Adventures Found
-            </h3>
-
-            <p className="text-gray-600 mb-8 max-w-md mx-auto">
-              We couldn't find any stories matching "{searchQuery}". Try
-              adjusting your search or explore our suggestions below.
-            </p>
-
-            {/* Quick Suggestions */}
-            <div className="max-w-2xl mx-auto">
-              <h4 className="text-sm font-semibold text-gray-500 mb-4">
-                POPULAR SEARCHES
-              </h4>
-              <div className="flex flex-wrap justify-center gap-3">
-                {[
-                  "Heritage Sites",
-                  "Food Trails",
-                  "Wildlife",
-                  "Beaches",
-                  "Mountains",
-                ].map((suggestion) => (
-                  <button
-                    key={suggestion}
-                    onClick={() => setSearchQuery(suggestion)}
-                    className="px-4 py-2 rounded-full text-sm border border-orange-200 
-                      text-orange-600 hover:bg-orange-50 transition-colors
-                      flex items-center gap-2"
-                  >
-                    <MapPin className="w-4 h-4" />
-                    {suggestion}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Random Destinations */}
-            <div className="mt-12">
-              <h4 className="text-sm font-semibold text-gray-500 mb-6">
-                YOU MIGHT BE INTERESTED IN
-              </h4>
-              <div className="grid md:grid-cols-3 gap-6 max-w-3xl mx-auto">
-                {BLOG_POSTS.slice(0, 3).map((post) => (
-                  <div key={post.id} className="group">
-                    <div className="relative h-48 rounded-lg overflow-hidden mb-3">
-                      <Image
-                        src={post.image}
-                        alt={post.title}
-                        fill
-                        className="object-cover group-hover:scale-105 transition-transform"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-                      <div className="absolute bottom-3 left-3 right-3">
-                        <span className="text-white text-sm font-medium">
-                          {post.category}
-                        </span>
-                      </div>
-                    </div>
-                    <h5 className="font-medium text-gray-900 group-hover:text-orange-600 transition-colors">
-                      {post.title}
-                    </h5>
-                  </div>
-                ))}
-              </div>
-            </div>
+          <div className="text-center py-12">
+            <p className="text-gray-900 text-lg">No posts found matching your criteria.</p>
           </div>
         )}
       </div>

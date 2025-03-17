@@ -39,10 +39,21 @@ export default function MobileMenu({ isOpen, setIsOpen }: MobileMenuProps) {
             leaveFrom="translate-x-0"
             leaveTo="translate-x-full"
           >
-            <Dialog.Panel className="fixed right-0 top-0 bottom-0 w-[80%] max-w-sm bg-white shadow-xl">
-              <div className="flex flex-col h-full">
+            <Dialog.Panel className="fixed right-0 top-0 bottom-0 w-[80%] max-w-sm bg-white shadow-xl overflow-hidden">
+              {/* Background Image */}
+              <div className="absolute inset-0 -z-10">
+                <Image
+                  src="https://images.unsplash.com/photo-1598091383021-15ddea10925d" // Taj Mahal at sunset
+                  alt="Indian Architecture"
+                  fill
+                  className="object-cover opacity-10"
+                  priority
+                />
+              </div>
+
+              <div className="flex flex-col h-full relative">
                 {/* Header */}
-                <div className="flex items-center justify-between p-4 border-b">
+                <div className="flex items-center justify-between p-4 border-b bg-white/80 backdrop-blur-sm">
                   <div className="flex items-center gap-2">
                     <Image 
                       src={Logo}
@@ -53,66 +64,32 @@ export default function MobileMenu({ isOpen, setIsOpen }: MobileMenuProps) {
                     />
                     <span className="font-semibold text-xl">Hidden India</span>
                   </div>
-                  <button
-                    onClick={() => setIsOpen(false)}
-                    className="p-2 rounded-full hover:bg-gray-100 transition-colors"
-                  >
-                    <svg 
-                      className="w-6 h-6" 
-                      fill="none" 
-                      stroke="currentColor" 
-                      viewBox="0 0 24 24"
-                    >
-                      <path 
-                        strokeLinecap="round" 
-                        strokeLinejoin="round" 
-                        strokeWidth={2} 
-                        d="M6 18L18 6M6 6l12 12" 
-                      />
-                    </svg>
-                  </button>
                 </div>
 
                 {/* Navigation Links */}
-                <div className="flex-1 overflow-y-auto py-4">
-                  {['Blog', 'Categories', 'About', 'Contact'].map((item) => {
-                    const path = `/${item.toLowerCase()}`;
-                    const isActive = pathname === path;
-                    
-                    return (
+                <nav className="flex-1 overflow-y-auto p-4">
+                  <div className="space-y-2">
+                    {NAV_ITEMS.map((item) => (
                       <Link
-                        key={path}
-                        href={path}
-                        className={`
-                          flex items-center px-6 py-4 text-lg transition-colors
-                          ${isActive 
-                            ? 'text-orange-500 bg-orange-50' 
-                            : 'text-gray-900 hover:bg-gray-50'
-                          }
-                        `}
+                        key={item.path}
+                        href={item.path}
+                        className={`block px-4 py-3 rounded-lg transition-colors
+                          ${pathname === item.path 
+                            ? 'bg-orange-500 text-white' 
+                            : 'hover:bg-gray-100/80 text-gray-900'
+                          }`}
                         onClick={() => setIsOpen(false)}
                       >
-                        {item}
-                        {isActive && (
-                          <span className="ml-auto">
-                            <svg 
-                              className="w-5 h-5" 
-                              fill="currentColor" 
-                              viewBox="0 0 24 24"
-                            >
-                              <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/>
-                            </svg>
-                          </span>
-                        )}
+                        {item.label}
                       </Link>
-                    );
-                  })}
-                </div>
+                    ))}
+                  </div>
+                </nav>
 
                 {/* Footer */}
-                <div className="border-t p-4">
-                  <p className="text-sm text-gray-500 text-center">
-                    Discover India's Hidden Gems
+                <div className="p-4 border-t bg-white/80 backdrop-blur-sm">
+                  <p className="text-sm text-gray-600 text-center">
+                    Discover the hidden gems of India
                   </p>
                 </div>
               </div>
@@ -123,3 +100,10 @@ export default function MobileMenu({ isOpen, setIsOpen }: MobileMenuProps) {
     </Transition>
   );
 }
+const NAV_ITEMS = [
+  { label: 'Home', path: '/' },
+  { label: 'Blog', path: '/blog' },
+  { label: 'States', path: '/states' },
+  { label: 'Categories', path: '/categories' },
+  { label: 'About', path: '/about' },
+];
