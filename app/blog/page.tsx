@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { Search, MapPin } from "lucide-react";
-
+import ScrollDownIndicator from "@/components/common/ScrollDownIndicator";
 import { BLOG_POSTS } from "./data";
 
 const CATEGORIES = [
@@ -29,12 +29,19 @@ export default function BlogPage() {
     return matchesSearch && matchesCategory;
   });
 
+  const handleScroll = () => {
+    const categoriesSection = document.getElementById('categories-section');
+    if (categoriesSection) {
+      categoriesSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
-    <div className="min-h-screen ">
+    <div className="min-h-screen">
       {/* Hero Section */}
       <div
         className={`relative w-full transition-all duration-500 ${
-          isSearchActive ? "h-[20vh]" : "min-h-screen"
+          isSearchActive ? "h-[30vh]" : "min-h-screen"
         }`}
       >
         <Image
@@ -51,7 +58,7 @@ export default function BlogPage() {
         {/* Header Content */}
         <div
           className={`absolute inset-0 flex items-start transition-all duration-800 ${
-            isSearchActive ? "pt-24" : " pt-72"
+            isSearchActive ? "pt-24" : "pt-48"
           }`}
         >
           <div
@@ -67,18 +74,20 @@ export default function BlogPage() {
                 isSearchActive ? "text-left" : "mx-auto mb-8"
               }`}
             >
-              <h1
-                className={` text-gray-200 font-bold transition-all duration-500 ${
-                  isSearchActive ? "text-4xl" : "text-6xl md:text-7xl mb-6"
-                }`}
-              >
-                Travel Stories
-              </h1>
               {!isSearchActive && (
+                <>
+              <h1
+              className={` text-gray-200 font-bold transition-all duration-500 ${
+                isSearchActive ? "text-4xl" : "text-6xl md:text-7xl mb-6"
+              }`}
+            >
+              Travel Stories
+            </h1>
                 <p className="text-xl md:text-2xl mb-8 max-w-2xl mx-auto text-gray-200">
                   Discover the vibrant culture, rich heritage, and breathtaking
                   landscapes of India through our curated travel guides
                 </p>
+                </>
               )}
             </div>
 
@@ -107,10 +116,20 @@ export default function BlogPage() {
             </div>
           </div>
         </div>
+
+        {/* Scroll Down Button - Only show when search is not active */}
+        {!isSearchActive && (
+          <div className="absolute bottom-8 left-0 right-0 flex justify-center">
+            <button onClick={handleScroll} className="animate-bounce">
+              <ScrollDownIndicator />
+            </button>
+          </div>
+        )}
       </div>
 
       {/* Categories and Blog Posts Section */}
       <div
+        id="categories-section"
         className={`max-w-7xl mx-auto px-4 py-16 transition-all duration-500 ${
           isSearchActive ? "-mt-24" : ""
         }`}
