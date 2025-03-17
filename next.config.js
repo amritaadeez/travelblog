@@ -8,7 +8,6 @@ const nextConfig = {
     minimumCacheTTL: 60,
   },
   experimental: {
-    optimizeCss: true,
     scrollRestoration: true,
   },
 };

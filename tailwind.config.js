@@ -22,8 +22,8 @@ module.exports = {
         'scale-up': 'scale-up 0.3s ease-out',
       },
       fontFamily: {
-        playfair: ['Playfair Display', 'serif'],
-        montserrat: ['Montserrat', 'sans-serif'],
+        playfair: ['var(--font-playfair)'],
+        montserrat: ['var(--font-montserrat)'],
       },
     },
   },
