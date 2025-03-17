@@ -29,6 +29,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4009037401426830" crossOrigin="anonymous"></script>
+      </head>
       <body className={`${playfair.variable} ${montserrat.variable}`}>
         <Navbar />
         <main className="min-h-screen">{children}</main>
