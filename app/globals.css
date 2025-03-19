@@ -70,3 +70,8 @@ html {
 h3, h2, h4 , .orange-text{
   color: rgb(249 115 22 / var(--tw-bg-opacity, 1)) !important;
 }
+
+
+.input-font-color {
+  color: black !important;
+}

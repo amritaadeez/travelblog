@@ -134,7 +134,7 @@ export default function ContactForm() {
   };
 
   const getInputClassName = (fieldName: keyof FormData) => {
-    const baseClasses = "w-full px-4 py-2 border rounded-md transition-all duration-200 focus:outline-none";
+    const baseClasses = "w-full px-4 py-2 border rounded-md transition-all duration-200 focus:outline-none input-font-color";
     const validationClasses = touched[fieldName]
       ? errors[fieldName]
         ? "border-red-500 focus:ring-2 focus:ring-red-200"
