@@ -12,9 +12,9 @@ const HERO_IMAGES = [
     location: "New Delhi",
   },
   {
-    url: "https://images.unsplash.com/photo-1564507592333-c60657eea523",
-    alt: "Taj Mahal, Agra",
-    location: "Agra",
+    url: "https://images.unsplash.com/photo-1656663785677-bc21fcb531db?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    alt: "Mahabodhi Temple, Bodh Gaya",
+    location: "Bodh Gaya",
   },
   {
     url: "https://images.unsplash.com/photo-1599661046289-e31897846e41",
@@ -30,12 +30,8 @@ const HERO_IMAGES = [
     url: "https://images.unsplash.com/photo-1570168007204-dfb528c6958f",
     alt: "Gateway of India, Mumbai",
     location: "Mumbai",
-  },
-  {
-    url: "https://images.unsplash.com/photo-1656663785677-bc21fcb531db?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    alt: "Mahabodhi Temple, Bodh Gaya",
-    location: "Bodh Gaya",
   }
+ 
 ];
 
 export default function Hero() {

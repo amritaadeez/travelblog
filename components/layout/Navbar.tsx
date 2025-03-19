@@ -22,7 +22,8 @@ export default function Navbar() {
   const isCategoriesPage = pathname === '/categories';
   const isAboutPage = pathname === '/about';
   const isContactPage = pathname === '/contact';
-  const isTransparentPage = isHomePage || isBlogPage || isCategoriesPage || isAboutPage || isContactPage;
+  const isStatesPage = pathname === '/states';
+  const isTransparentPage = isHomePage || isBlogPage || isCategoriesPage || isAboutPage || isContactPage || isStatesPage;
   
   const { isScrolled } = useScroll({ offset: 20 });
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);

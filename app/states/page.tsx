@@ -3,8 +3,14 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState, useEffect, useRef } from 'react';
 import { useInView } from 'framer-motion';
-import { MapPin, Compass, Star, ArrowRight, Globe, ExternalLink } from 'lucide-react';
+import { MapPin, Compass, Star, ArrowRight, Globe, ExternalLink, X } from 'lucide-react';
 import { INDIA_STATES } from '../data/india-states';
+
+// Add state type for iframe
+interface IframeState {
+  isOpen: boolean;
+  url: string;
+}
 
 // Add 'All' to regions and sort states
 const REGIONS = ['All', 'North', 'South', 'East', 'West', 'Central', 'Northeast', 'Union Territory'] as const;
@@ -28,9 +34,22 @@ export default function StatesPage() {
   const [activeRegion, setActiveRegion] = useState<RegionType>('All');
   const [displayedStates, setDisplayedStates] = useState<typeof INDIA_STATES>([]);
   const [currentIndex, setCurrentIndex] = useState(STATES_PER_PAGE);
+  const [iframe, setIframe] = useState<IframeState>({ isOpen: false, url: '' });
   
   const loadMoreRef = useRef(null);
   const isInView = useInView(loadMoreRef);
+
+  // Function to open iframe with mobile version of Wikipedia
+  const openWikipedia = (url: string) => {
+    // Convert regular Wikipedia URL to mobile version
+    const mobileUrl = url.replace('wikipedia.org', 'm.wikipedia.org');
+    setIframe({ isOpen: true, url: mobileUrl });
+  };
+
+  // Function to close iframe
+  const closeIframe = () => {
+    setIframe({ isOpen: false, url: '' });
+  };
 
   useEffect(() => {
     setDisplayedStates(groupedStates[activeRegion].slice(0, STATES_PER_PAGE));
@@ -183,10 +202,10 @@ export default function StatesPage() {
                   </h3>
                   <div className="grid grid-cols-2 gap-4">
                     {state.majorCities.map((city) => (
-                      <Link 
+                      <button 
                         key={city.slug}
-                        href={`https://en.wikipedia.org/wiki/${state.slug}/${city.slug}`}
-                        className="group bg-gray-50 rounded-xl p-4 hover:bg-gray-100 transition-all duration-300"
+                        onClick={() => openWikipedia(`https://en.wikipedia.org/wiki/${city.slug}`)}
+                        className="group bg-gray-50 rounded-xl p-4 hover:bg-gray-100 transition-all duration-300 w-full text-left"
                       >
                         <div className="relative h-32 mb-3 rounded-lg overflow-hidden">
                           <Image
@@ -195,13 +214,15 @@ export default function StatesPage() {
                             fill
                             className="object-cover group-hover:scale-110 transition-transform duration-500"
                           />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                         </div>
-                        <h4 className="font-medium text-gray-900 group-hover:text-orange-500 transition-colors">
-                          {city.name}
-                        </h4>
-                        <p className="text-sm text-gray-500 mt-1">{city.type}</p>
-                      </Link>
+                        <div className="flex items-start justify-between">
+                          <div>
+                            <h4 className="font-semibold text-gray-900">{city.name}</h4>
+                            <p className="text-sm text-gray-500">{city.type}</p>
+                          </div>
+                          <ExternalLink className="w-4 h-4 text-gray-400 group-hover:text-gray-600" />
+                        </div>
+                      </button>
                     ))}
                   </div>
                 </div>
@@ -215,10 +236,10 @@ export default function StatesPage() {
                     </h3>
                     <div className="grid grid-cols-2 gap-4">
                       {state.hiddenGems.map((gem) => (
-                        <Link 
+                        <button 
                           key={gem.slug}
-                          href={`https://en.wikipedia.org/wiki/${state.slug}/${gem.slug}`}
-                          className="group relative h-48 rounded-xl overflow-hidden"
+                          onClick={() => openWikipedia(`https://en.wikipedia.org/wiki/${gem.slug}`)}
+                          className="group relative h-48 rounded-xl overflow-hidden w-full text-left"
                         >
                           <Image
                             src={gem.image}
@@ -227,16 +248,14 @@ export default function StatesPage() {
                             className="object-cover group-hover:scale-110 transition-transform duration-500"
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
-                          <div className="absolute bottom-0 left-0 right-0 p-4">
-                            <h4 className="text-white font-medium group-hover:text-orange-300 transition-colors">
-                              {gem.name}
-                            </h4>
-                            <div className="flex items-center gap-2 text-white/80 text-sm mt-1">
-                              <Star className="w-4 h-4 fill-yellow-500 text-yellow-500" />
-                              <span>{gem.rating}</span>
+                          <div className="absolute bottom-0 left-0 right-0 p-4 flex items-start justify-between">
+                            <div>
+                              <h4 className="text-white font-semibold">{gem.name}</h4>
+                              <p className="text-white/80 text-sm">{gem.type}</p>
                             </div>
+                            <ExternalLink className="w-4 h-4 text-white/80 group-hover:text-white" />
                           </div>
-                        </Link>
+                        </button>
                       ))}
                     </div>
                   </div>
@@ -244,23 +263,15 @@ export default function StatesPage() {
 
                 {/* Explore More Link */}
                 <div className="flex justify-between items-center mt-8">
-                  <Link 
-                    href={`/states/${state.slug}`}
-                    className="inline-flex items-center gap-2 text-orange-500 hover:text-orange-600 transition-colors group"
-                  >
-                    <span>Explore More</span>
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                  </Link>
+                 
 
-                  <a 
-                    href={`https://en.wikipedia.org/wiki/${state.name}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <button 
+                    onClick={() => openWikipedia(`https://en.wikipedia.org/wiki/${state.name}`)}
                     className="inline-flex items-center gap-2 text-gray-600 hover:text-gray-800 transition-colors group"
                   >
-                    <span>Wikipedia</span>
-                    <ExternalLink className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                  </a>
+                    <span>Explore  {state.name}</span> 
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </button>
                 </div>
               </div>
             </div>
@@ -277,6 +288,32 @@ export default function StatesPage() {
           </div>
         )}
       </div>
+
+      {/* Wikipedia Iframe Modal */}
+      {iframe.isOpen && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl w-full max-w-6xl h-[80vh] relative">
+            <button
+              onClick={closeIframe}
+              className="absolute -top-4 -right-4 bg-white rounded-full p-2 shadow-lg hover:bg-gray-100 transition-colors"
+            >
+              <X className="w-6 h-6" />
+            </button>
+            <div className="w-full h-full rounded-2xl overflow-hidden">
+              <iframe
+                src={iframe.url}
+                className="w-full h-full"
+                title="Wikipedia Content"
+                sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
+                style={{
+                  marginTop: '-56px',  // Adjust this value to hide the header
+                  height: 'calc(100% + 56px)'  // Compensate for the negative margin
+                }}
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
