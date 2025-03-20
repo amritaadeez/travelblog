@@ -114,7 +114,7 @@ export default function AboutPage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
-                className="text-xl md:text-2xl text-gray-200 mb-8 font-montserrat leading-relaxed"
+                className="hidden md:block text-xl md:text-2xl text-gray-200 mb-8 font-montserrat leading-relaxed"
               >
                 Embark on a spiritual journey through the mystical lands of India, 
                 where ancient traditions blend seamlessly with modern aspirations.
@@ -495,6 +495,7 @@ export default function AboutPage() {
     </div>
   );
 }
+
 
 
 
