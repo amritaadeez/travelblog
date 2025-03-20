@@ -125,18 +125,30 @@ export default function StatesPage() {
   useEffect(() => {
     if (isInView) {
       const filteredStates = getFilteredStates();
-      if (currentIndex < filteredStates.length) {
-        setDisplayedStates(filteredStates.slice(0, currentIndex + STATES_PER_PAGE));
+      const nextBatch = filteredStates.slice(0, currentIndex + STATES_PER_PAGE);
+      
+      if (nextBatch.length > displayedStates.length) {
+        setDisplayedStates(nextBatch);
         setCurrentIndex(prev => prev + STATES_PER_PAGE);
       }
     }
-  }, [isInView, currentIndex, getFilteredStates]);
+  }, [isInView, currentIndex, getFilteredStates, displayedStates.length]);
 
   // Add reset handler
   const handleReset = () => {
     setSearchQuery('');
     setActiveRegion('All');
     searchInputRef.current?.blur();
+  };
+
+  const handleLoadMore = () => {
+    const filteredStates = getFilteredStates();
+    const nextBatch = filteredStates.slice(0, currentIndex + STATES_PER_PAGE);
+    
+    if (nextBatch.length > displayedStates.length) {
+      setDisplayedStates(nextBatch);
+      setCurrentIndex(prev => prev + STATES_PER_PAGE);
+    }
   };
 
   return (
@@ -438,13 +450,20 @@ export default function StatesPage() {
               ))}
             </div>
 
-            {/* Loading indicator */}
-            {currentIndex < getFilteredStates().length && (
-              <div 
-                ref={loadMoreRef}
-                className="flex justify-center items-center py-8"
-              >
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500"></div>
+            {/* Load More Button */}
+            {displayedStates.length < getFilteredStates().length && (
+              <div className="flex justify-center mt-12">
+                <button
+                  onClick={handleLoadMore}
+                  className="group flex items-center gap-2 px-6 py-3 bg-orange-500 
+                    text-white rounded-full hover:bg-orange-600 transition-colors"
+                >
+                  <span>Load More</span>
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  <span className="text-sm opacity-70 ml-1">
+                    ({displayedStates.length} of {getFilteredStates().length})
+                  </span>
+                </button>
               </div>
             )}
           </>
