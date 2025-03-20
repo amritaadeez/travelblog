@@ -106,4 +106,5 @@ const NAV_ITEMS = [
   { label: 'States', path: '/states' },
   { label: 'Categories', path: '/categories' },
   { label: 'About', path: '/about' },
+  { label: 'Contact', path: '/contact' }
 ];
