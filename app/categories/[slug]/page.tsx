@@ -241,7 +241,7 @@ export default function CategoryDetailPage() {
                 <div className="w-20 h-1 bg-orange-500 mx-auto"></div>
               </motion.div>
 
-              {category.sections[0]?.cuisines.map((cuisine, index) => (
+              {category.sections[0]?.cuisines?.map((cuisine, index) => (
                 <div key={cuisine.region} className="mb-16">
                   <h3 className="font-playfair text-3xl font-bold mb-8 text-center">
                     {cuisine.region}
