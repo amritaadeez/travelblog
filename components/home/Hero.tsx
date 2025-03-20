@@ -88,7 +88,7 @@ export default function Hero() {
       </div>
 
       {/* Location Indicator - Same position for all screen sizes */}
-      <div className="absolute top-32 left-8 text-white/90 font-light">
+      <div className="absolute top-16 left-8 text-white/90 font-light">
         <div className="flex items-center space-x-2">
           <svg 
             xmlns="http://www.w3.org/2000/svg" 

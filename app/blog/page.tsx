@@ -58,8 +58,10 @@ export default function BlogPage() {
     <div className="min-h-screen">
       {/* Hero Section */}
       <div
-        className={`relative w-full transition-all duration-500 ${
-          isSearchActive ? "h-[20vh]" : "min-h-screen"
+        className={`w-full transition-all duration-500 ${
+          isSearchActive 
+            ? "h-[30vh] sticky top-0 z-50" // Make it sticky when search is active
+            : "min-h-screen relative"
         }`}
       >
         <Image
@@ -165,84 +167,89 @@ export default function BlogPage() {
 
       {/* Categories and Blog Posts Section */}
       <div
-        id="categories-section" style={{background:'white'}}
-        className={`max-w-7xl mx-auto px-4 py-16 transition-all duration-500 ${
-          isSearchActive ? "-mt-24" : ""
+        id="categories-section"
+        style={{ background: 'white' }}
+        className={`relative z-40 transition-all duration-500 ${
+          isSearchActive 
+            ? "pt-8" // Reduced padding when search is active
+            : "pt-16"
         }`}
       >
-        {/* Categories */}
-        <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-gray-900">
-            Explore Categories
-          </h2>
-          <div className="flex flex-wrap gap-4">
-            {CATEGORIES.map((category) => (
-              <button
-                key={category.name}
-                onClick={() => handleCategorySelect(category.name)}
-                className={`px-4 py-2 rounded-full text-sm whitespace-nowrap ${
-                  selectedCategory === category.name
-                    ? "bg-orange-500 text-white"
-                    : "bg-gray-100 text-gray-900 hover:bg-gray-200"
-                }`}
-              >
-                {category.name} ({category.count})
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Blog Posts Grid */}
-        {filteredPosts.length > 0 ? (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredPosts.map((post) => (
-              <article
-                key={post.id}
-                className="group bg-white rounded-lg overflow-hidden shadow-lg"
-              >
-                <Link href={`/blog/${post.slug}`}>
-                  <div className="relative h-64 overflow-hidden">
-                    <Image
-                      src={post.image}
-                      alt={post.title}
-                      fill
-                      className="object-cover transition-transform duration-300 group-hover:scale-105"
-                    />
-                  </div>
-                  <div className="p-6">
-                    <h3 className="text-xl font-bold mb-2 text-gray-900">
-                      {post.title}
-                    </h3>
-                    <p className="text-gray-900 mb-4">{post.excerpt}</p>
-                    <div className="flex items-center text-gray-900">
-                      <MapPin className="w-4 h-4 mr-2" />
-                      
-                      <span className="text-sm">{post.category}</span>
-                    </div>
-                  </div>
-                </Link>
-              </article>
-            ))}
-          </div>
-        ) : (
-          <div className="text-center py-12 max-w-md mx-auto">
-            <div className="relative w-48 h-48 mx-auto mb-8">
-              <Image
-                src="/no-results.svg"
-                alt="No results found"
-                fill
-                className="object-contain"
-              />
+        <div className="max-w-7xl mx-auto px-4">
+          {/* Categories */}
+          <div className="mb-12">
+            <h2 className="text-2xl font-bold mb-6 text-gray-900">
+              Explore Categories
+            </h2>
+            <div className="flex flex-wrap gap-4">
+              {CATEGORIES.map((category) => (
+                <button
+                  key={category.name}
+                  onClick={() => handleCategorySelect(category.name)}
+                  className={`px-4 py-2 rounded-full text-sm whitespace-nowrap ${
+                    selectedCategory === category.name
+                      ? "bg-orange-500 text-white"
+                      : "bg-gray-100 text-gray-900 hover:bg-gray-200"
+                  }`}
+                >
+                  {category.name} ({category.count})
+                </button>
+              ))}
             </div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-3">
-              No Stories Found
-            </h3>
-            <p className="text-gray-600 mb-6">
-              We couldn't find any travel stories matching your search criteria. Try adjusting your filters or search terms.
-            </p>
-           
           </div>
-        )}
+
+          {/* Blog Posts Grid */}
+          {filteredPosts.length > 0 ? (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {filteredPosts.map((post) => (
+                <article
+                  key={post.id}
+                  className="group bg-white rounded-lg overflow-hidden shadow-lg"
+                >
+                  <Link href={`/blog/${post.slug}`}>
+                    <div className="relative h-64 overflow-hidden">
+                      <Image
+                        src={post.image}
+                        alt={post.title}
+                        fill
+                        className="object-cover transition-transform duration-300 group-hover:scale-105"
+                      />
+                    </div>
+                    <div className="p-6">
+                      <h3 className="text-xl font-bold mb-2 text-gray-900">
+                        {post.title}
+                      </h3>
+                      <p className="text-gray-900 mb-4">{post.excerpt}</p>
+                      <div className="flex items-center text-gray-900">
+                        <MapPin className="w-4 h-4 mr-2" />
+                        
+                        <span className="text-sm">{post.category}</span>
+                      </div>
+                    </div>
+                  </Link>
+                </article>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-12 max-w-md mx-auto">
+              <div className="relative w-48 h-48 mx-auto mb-8">
+                <Image
+                  src="/no-results.svg"
+                  alt="No results found"
+                  fill
+                  className="object-contain"
+                />
+              </div>
+              <h3 className="text-2xl font-bold text-gray-900 mb-3">
+                No Stories Found
+              </h3>
+              <p className="text-gray-600 mb-6">
+                We couldn't find any travel stories matching your search criteria. Try adjusting your filters or search terms.
+              </p>
+             
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
