@@ -38,11 +38,18 @@ export default function StatesPage() {
   const [currentIndex, setCurrentIndex] = useState(STATES_PER_PAGE);
   const [iframe, setIframe] = useState<IframeState>({ isOpen: false, url: '' });
   const [isSearchFocused, setIsSearchFocused] = useState(false);
+  const [shortcutKey, setShortcutKey] = useState(''); // Add this state
   
   const loadMoreRef = useRef(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const isInView = useInView(loadMoreRef);
   const contentRef = useRef<HTMLDivElement>(null);
+
+  // Add useEffect for platform detection
+  useEffect(() => {
+    const isMac = window.navigator.platform.includes('Mac');
+    setShortcutKey(isMac ? '(⌘K)' : '(Ctrl+K)');
+  }, []);
 
   const handleRegionChange = (region: RegionType) => {
     setActiveRegion(region);
@@ -163,7 +170,7 @@ export default function StatesPage() {
                 <input
                   ref={searchInputRef}
                   type="text"
-                  placeholder={`Search states, cities, or places... ${window.navigator.platform.includes('Mac') ? '(⌘K)' : '(Ctrl+K)'}`}
+                  placeholder={`Search states, cities, or places... ${shortcutKey}`}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   onFocus={() => setIsSearchFocused(true)}

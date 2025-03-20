@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -13,11 +13,16 @@ export default function CategoriesPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState('all');
+  const [shortcutKey, setShortcutKey] = useState('');  // Initialize empty
   const searchInputRef = useRef<HTMLInputElement>(null);
   const { isScrolled } = useScroll({ offset: 20 });
 
-  // Add keyboard shortcut for search
+  // Move all window-dependent code into useEffect
   useEffect(() => {
+    // Set shortcut key based on platform
+    const isMac = window.navigator.platform.includes('Mac');
+    setShortcutKey(isMac ? '(⌘K)' : '(Ctrl+K)');
+
     const handleKeyPress = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
         e.preventDefault();
@@ -84,7 +89,7 @@ export default function CategoriesPage() {
               <input
                 ref={searchInputRef}
                 type="text"
-                placeholder={`Search categories... ${window.navigator.platform.includes('Mac') ? '(⌘K)' : '(Ctrl+K)'}`}
+                placeholder={`Search categories... ${shortcutKey}`}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onFocus={() => setIsSearchFocused(true)}
@@ -209,6 +214,7 @@ export default function CategoriesPage() {
     </div>
   );
 }
+
 
 
 
