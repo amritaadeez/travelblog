@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Search, MapPin, X, Compass, RotateCcw } from "lucide-react";
 import ScrollDownIndicator from "@/components/common/ScrollDownIndicator";
 import { BLOG_POSTS } from "./data";
@@ -48,15 +48,18 @@ export default function BlogPage() {
   // Modified category selection handler with scroll
   const handleCategorySelect = (categoryName: string) => {
     setSelectedCategory(categoryName);
-    // setIsSearchActive(true);
     
-    // Scroll to content section
-    const yOffset = -150; // Adjust this value based on your header height
-    const element = contentRef.current;
-    if (element) {
-      const y = element.getBoundingClientRect().top + window.scrollY + yOffset;
-      window.scrollTo({ top: y, behavior: 'smooth' });
-    }
+    // Move the scroll logic into useEffect to ensure it only runs on client
+    useEffect(() => {
+      if (categoryName !== selectedCategory) {
+        const yOffset = -150;
+        const element = contentRef.current;
+        if (element) {
+          const y = element.getBoundingClientRect().top + window.scrollY + yOffset;
+          window.scrollTo({ top: y, behavior: 'smooth' });
+        }
+      }
+    }, [categoryName, selectedCategory]);
   };
 
   // Modified search clear handler
@@ -84,10 +87,23 @@ export default function BlogPage() {
     return matchesSearch && matchesCategory;
   });
 
+  const scrollToContent = () => {
+    if (typeof window !== 'undefined') { // Check if we're on the client
+      const yOffset = -150;
+      const element = contentRef.current;
+      if (element) {
+        const y = element.getBoundingClientRect().top + window.scrollY + yOffset;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      }
+    }
+  };
+
   const handleScroll = () => {
-    const categoriesSection = document.getElementById("categories-section");
-    if (categoriesSection) {
-      categoriesSection.scrollIntoView({ behavior: "smooth" });
+    if (typeof window !== 'undefined') { // Check if we're on the client
+      const categoriesSection = document.getElementById("categories-section");
+      if (categoriesSection) {
+        categoriesSection.scrollIntoView({ behavior: "smooth" });
+      }
     }
   };
 
