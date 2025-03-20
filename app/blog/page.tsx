@@ -21,7 +21,15 @@ export default function BlogPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All Categories"); // Set default selection
   const [isSearchActive, setIsSearchActive] = useState(false);
+  const [shortcutKey, setShortcutKey] = useState("(Ctrl+K)");
   const contentRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    // Set the shortcut key based on platform
+    setShortcutKey(
+      window.navigator.platform.includes("Mac") ? "(⌘K)" : "(Ctrl+K)"
+    );
+  }, []);
 
   // Add this function to get filtered count for each category
   const getCategoryCount = (categoryName: string) => {
@@ -167,11 +175,7 @@ export default function BlogPage() {
               <div className="relative transform hover:scale-[1.01] transition-all duration-300">
                 <input
                   type="text"
-                  placeholder={`Search stories... ${
-                    window.navigator.platform.includes("Mac")
-                      ? "(⌘K)"
-                      : "(Ctrl+K)"
-                  }`}
+                  placeholder={`Search stories... ${shortcutKey}`}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   onFocus={() => {
