@@ -10,6 +10,7 @@ export interface Post {
   };
   category: string;
   content: string;
+  featured?: boolean;
 }
 
 export interface PostMeta {
@@ -19,4 +20,5 @@ export interface PostMeta {
   coverImage: string;
   date: string;
   category: string;
+  featured?: boolean;
 }

@@ -62,7 +62,7 @@ export default function CategoriesPage() {
       {/* Enhanced Hero Section */}
       <div className={`relative ${isSearchFocused ? 'h-[30vh]' : 'h-[70vh]'} transition-all duration-500`}>
         <Image
-          src="https://images.unsplash.com/photo-1519055548599-6d4d129508c4?w=1800"
+          src="https://images.unsplash.com/photo-1606298855672-3efb63017be8"
           alt="Categories header"
           fill
           className="object-cover"
@@ -214,6 +214,7 @@ export default function CategoriesPage() {
     </div>
   );
 }
+
 
 
 

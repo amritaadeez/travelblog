@@ -2,7 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useRef, useEffect } from "react";
-import { Search, MapPin, X, Compass, RotateCcw } from "lucide-react";
+import { Search, MapPin, X, Compass, RotateCcw, ArrowRight } from "lucide-react";
 import ScrollDownIndicator from "@/components/common/ScrollDownIndicator";
 import { BLOG_POSTS } from "./data";
 import NoDataFound from '@/components/common/NoDataFound';
@@ -57,17 +57,13 @@ export default function BlogPage() {
   const handleCategorySelect = (categoryName: string) => {
     setSelectedCategory(categoryName);
     
-    // Move the scroll logic into useEffect to ensure it only runs on client
-    useEffect(() => {
-      if (categoryName !== selectedCategory) {
-        const yOffset = -150;
-        const element = contentRef.current;
-        if (element) {
-          const y = element.getBoundingClientRect().top + window.scrollY + yOffset;
-          window.scrollTo({ top: y, behavior: 'smooth' });
-        }
-      }
-    }, [categoryName, selectedCategory]);
+    // Scroll handling
+    const yOffset = -150;
+    const element = contentRef.current;
+    if (element) {
+      const y = element.getBoundingClientRect().top + window.scrollY + yOffset;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }
   };
 
   // Modified search clear handler
@@ -126,7 +122,7 @@ export default function BlogPage() {
         {/* Background Image Container */}
         <div className="absolute inset-0 w-full h-full">
           <Image
-            src="https://images.unsplash.com/photo-1514222134-b57cbb8ce073?w=1800&auto=format&fit=crop&q=60"
+            src="https://images.unsplash.com/photo-1470246973918-29a93221c455"
             alt="India Gate at sunset"
             fill
             className="object-cover"
@@ -221,7 +217,7 @@ export default function BlogPage() {
         <div className="container mx-auto">
           <div className="bg-white rounded-full shadow-lg p-2">
             <div className="flex items-center gap-2 overflow-x-auto py-2 px-2 scrollbar-hide">
-              {(searchQuery || selectedCategory !== "All Categories") && (
+              {/* {(searchQuery || selectedCategory !== "All Categories") && (
                 <button
                   onClick={handleReset}
                   className="group flex items-center gap-2 px-4 py-2 rounded-full
@@ -231,7 +227,7 @@ export default function BlogPage() {
                   <RotateCcw className="w-4 h-4 group-hover:rotate-180 transition-transform duration-500" />
                   <span>Reset</span>
                 </button>
-              )}
+              )} */}
               {CATEGORIES.map((category) => (
                 <button
                   key={category.name}
@@ -256,7 +252,7 @@ export default function BlogPage() {
       </div>
 
       {/* Content Section - Add ref here */}
-      <div ref={contentRef} className="container mx-auto px-4 pt-12">
+      <div ref={contentRef} className="container mx-auto px-4 pt-12 pb-24"> {/* Added pb-24 for bottom padding */}
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center gap-4">
             <h2 className="text-xl font-semibold text-gray-900 flex items-center gap-2">
@@ -303,34 +299,109 @@ export default function BlogPage() {
               <Link 
                 href={`/blog/${post.slug}`}
                 key={post.id}
-                className="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl 
+                className="group relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl 
                   transform hover:-translate-y-2 transition-all duration-300"
               >
-                <article>
+                {/* Decorative Background */}
+                <div className="absolute inset-0 opacity-[0.03] group-hover:opacity-[0.05] transition-opacity duration-300">
+                  <Image
+                    src={post.image}
+                    alt=""
+                    fill
+                    className="object-cover blur-sm"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  />
+                </div>
+
+                <article className="relative">
+                  {/* Image Container */}
                   <div className="relative h-64 overflow-hidden">
                     <Image
                       src={post.image}
                       alt={post.title}
                       fill
                       className="object-cover group-hover:scale-110 transition-transform duration-500"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  </div>
-                  <div className="p-8">
-                    <div className="flex items-center mb-4">
-                      <span className="px-3 py-1 rounded-full text-sm font-medium bg-orange-100 text-orange-600">
+                    {/* Gradient Overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    
+                    {/* Category Badge */}
+                    <div className="absolute top-4 left-4">
+                      <span className="px-3 py-1 rounded-full text-sm font-medium bg-white/90 text-orange-600 
+                        backdrop-blur-sm shadow-sm">
                         {post.category}
                       </span>
                     </div>
-                    <h3 className="text-xl font-bold mb-3 text-gray-900 group-hover:text-orange-600 transition-colors">
+                  </div>
+
+                  {/* Content Container */}
+                  <div className="relative p-6 bg-white/80 backdrop-blur-[2px]">
+                    {/* Meta Information */}
+                    <div className="flex items-center gap-4 mb-4">
+                      {/* Author Info */}
+                      <div className="flex items-center gap-2">
+                        <div className="relative w-8 h-8 rounded-full overflow-hidden">
+                          <Image
+                            src={post.author.avatar}
+                            alt={post.author.name}
+                            fill
+                            className="object-cover"
+                          />
+                        </div>
+                        <span className="text-sm text-gray-600">{post.author.name}</span>
+                      </div>
+                      {/* Read Time */}
+                      <span className="text-sm text-gray-500">{post.readTime}</span>
+                    </div>
+
+                    {/* Title */}
+                    <h3 className="text-xl font-bold mb-3 text-gray-900 group-hover:text-orange-600 
+                      line-clamp-2 transition-colors font-playfair">
                       {post.title}
                     </h3>
-                    <p className="text-gray-600 line-clamp-2 mb-4">
+
+                    {/* Excerpt */}
+                    <p className="text-gray-600 line-clamp-2 mb-4 text-sm">
                       {post.excerpt}
                     </p>
-                    <div className="flex items-center text-gray-500">
-                      <MapPin className="w-4 h-4 mr-2" />
-                      <span className="text-sm">{post.category}</span>
+
+                    {/* Footer */}
+                    <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                      {/* Location and Date */}
+                      <div className="flex items-center space-x-3">
+                        {/* Category with icon */}
+                        <div className="flex items-center text-gray-500">
+                          <MapPin className="w-4 h-4 mr-1.5" />
+                          <span className="text-sm">{post.category}</span>
+                        </div>
+                        
+                        {/* Separator */}
+                        <span className="text-gray-300">•</span>
+                        
+                        {/* Date */}
+                        <time className="text-sm text-gray-500">
+                          {new Date(post.date).toLocaleDateString('en-US', {
+                            month: 'short',
+                            day: 'numeric',
+                            year: 'numeric'
+                          })}
+                        </time>
+                      </div>
+
+                      {/* Date and Read More Container */}
+                      <div className="flex items-center gap-4">
+                        {/* Date */}
+                       
+
+                        {/* Read More - Visible on Hover */}
+                        <div className="transform translate-y-4 opacity-0 
+                          group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+                          <span className="text-orange-600 font-medium text-sm flex items-center gap-1">
+                            Read More <ArrowRight className="w-4 h-4" />
+                          </span>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </article>

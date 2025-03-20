@@ -134,12 +134,13 @@ export default function ContactForm() {
   };
 
   const getInputClassName = (fieldName: keyof FormData) => {
-    const baseClasses = "w-full px-4 py-2 border rounded-md transition-all duration-200 focus:outline-none input-font-color";
+    const isTextarea = fieldName === 'message';
+    const baseClasses = `w-full px-4 py-3 ${isTextarea ? 'rounded-2xl' : 'rounded-full'} transition-all duration-200 focus:outline-none bg-white`;
     const validationClasses = touched[fieldName]
       ? errors[fieldName]
-        ? "border-red-500 focus:ring-2 focus:ring-red-200"
-        : "border-green-500 focus:ring-2 focus:ring-green-200"
-      : "border-gray-300 focus:ring-2 focus:ring-blue-200";
+        ? "border-2 border-red-300 focus:border-red-500"
+        : "border-2 border-green-300 focus:border-green-500"
+      : "border-2 border-gray-200 focus:border-orange-500";
     
     return `${baseClasses} ${validationClasses}`;
   };
@@ -258,10 +259,10 @@ export default function ContactForm() {
         <button
           type="submit"
           disabled={status === 'loading' || !isFormValid()}
-          className={`w-full px-6 py-3 rounded-md font-semibold transition-all duration-200 ${
+          className={`w-full px-6 py-3 rounded-full font-semibold transition-all duration-200 ${
             status === 'loading' || !isFormValid()
-              ? 'bg-gray-400 cursor-not-allowed opacity-50'
-              : 'bg-blue-600 hover:bg-blue-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2'
+              ? 'bg-gray-300 cursor-not-allowed'
+              : 'bg-orange-500 hover:bg-orange-600 text-white shadow-lg hover:shadow-orange-200'
           }`}
         >
           {status === 'loading' ? (

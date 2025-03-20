@@ -1,116 +1,175 @@
-import Link from 'next/link';
+"use client";
+import Link from "next/link";
+import Image from "next/image";
+import { motion } from "framer-motion";
+import hiddenIndia from "../../app/logo.png";
+import {
+  Instagram,
+  Facebook,
+  Twitter,
+  Linkedin,
+  Mail,
+  Phone,
+  Globe,
+  MessageCircle,
+  ArrowRight,
+} from "lucide-react";
 
 export default function Footer() {
+  const socialLinks = [
+    { icon: Instagram, href: "https://instagram.com", label: "Instagram" },
+    { icon: Facebook, href: "https://facebook.com", label: "Facebook" },
+    { icon: Twitter, href: "https://twitter.com", label: "Twitter" },
+    { icon: Linkedin, href: "https://linkedin.com", label: "LinkedIn" },
+  ];
+
+  const quickLinks = [
+    { name: "Home", href: "/" },
+    { name: "About", href: "/about" },
+    { name: "States", href: "/states" },
+    { name: "Contact", href: "/contact" },
+  ];
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+    },
+  };
+
   return (
-    <footer className="bg-gray-50 border-t">
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div>
-            <h3 className="font-playfair text-lg font-bold mb-4">Hidden India</h3>
-            <p className="text-gray-600">
-              Exploring the world one story at a time.
+    <footer className="bg-gradient-to-b from-white to-orange-50/30  border-t-2 border-orange-200">
+      {/* Connect Section */}
+      <div className="relative overflow-hidden">
+        <div className="container mx-auto px-4 pt-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="bg-gradient-to-r from-orange-500 to-orange-600 rounded-3xl p-8 md:p-12 relative overflow-hidden"
+          >
+            <div className="absolute inset-0 bg-[url('/pattern.png')] opacity-10" />
+            <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
+              <div className="text-center md:text-left">
+                <Link
+                  href="/"
+                  className="group flex items-center gap-3 text-3xl md:text-4xl text-white font-bold mb-4 group inline-flex items-center gap-2 bg-white px-8 py-4 rounded-full 
+                    font-semibold text-lg text-orange-500 shadow-lg hover:shadow-xl 
+                    transition-all duration-300 hover:bg-orange-50"
+                >
+                  <motion.div
+                    whileHover={{ rotate: 360 }}
+                    transition={{ duration: 0.5 }}
+                  >
+                    <Image
+                      src={hiddenIndia}
+                      alt="Hidden India"
+                      width={36}
+                      height={36}
+                      className="rounded-full shadow-md group-hover:shadow-lg transition-shadow"
+                    />
+                  </motion.div>
+                  <span className="text-orange-500 text-xl md:text-2xl font-semibold">
+                    Hidden India
+                  </span>
+                </Link>
+                <h2 className="text-3xl md:text-4xl font-playfair text-white font-bold mb-4">
+                  Ready to Explore India?
+                </h2>
+                <p className="text-white/90 text-lg max-w-xl">
+                  Join us on a journey to discover the hidden treasures of
+                  India. Let's create unforgettable memories together.
+                </p>
+              </div>
+
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Link
+                  href="/contact"
+                  className="group inline-flex items-center gap-2 bg-white px-8 py-4 rounded-full 
+                    font-semibold text-lg text-orange-500 shadow-lg hover:shadow-xl 
+                    transition-all duration-300 hover:bg-orange-50"
+                >
+                  <MessageCircle className="w-5 h-5 transition-transform group-hover:rotate-12" />
+                  Let's Connect
+                  <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+                </Link>
+              </motion.div>
+            </div>
+          </motion.div>
+        </div>
+      </div>
+
+      {/* Main Footer Content */}
+      <div className="container mx-auto px-4 pt-0 pb-8">
+        {/* Bottom Section */}
+        <motion.div
+          variants={itemVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="mt-8 pt-8 border-t-2 border-orange-200"
+        >
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+            {/* Contact Buttons */}
+
+            <p className="text-gray-500 text-center md:text-left">
+              © {new Date().getFullYear()} Hidden India. All rights reserved.
             </p>
-            <p className="text-gray-600 mt-2">
-              Greater Noida, India
-            </p>
-          </div>
-          
-          <div>
-            <h4 className="font-playfair font-semibold mb-4">Quick Links</h4>
-            <ul className="space-y-2">
-              <li>
-                <Link href="/blog" className="text-gray-600 hover:text-gray-900">
-                  Blog
-                </Link>
-              </li>
-              <li>
-                <Link href="/categories" className="text-gray-600 hover:text-gray-900">
-                  Categories
-                </Link>
-              </li>
-              <li>
-                <Link href="/about" className="text-gray-600 hover:text-gray-900">
-                  About Us
-                </Link>
-              </li>
-              <li>
-                <a href="https://amritraj.in" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-gray-900">
-                  Portfolio
-                </a>
-              </li>
-            </ul>
-          </div>
-          
-          <div>
-            <h4 className="font-playfair font-semibold mb-4">Contact</h4>
-            <ul className="space-y-2">
-              <li>
-                <a href="mailto:amrtrj68@gmail.com" className="text-gray-600 hover:text-gray-900 flex items-center gap-2">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
-                  amrtrj68@gmail.com
-                </a>
-              </li>
-              <li>
-                <a href="tel:+918789371964" className="text-gray-600 hover:text-gray-900">
-                  +91 8789371964
-                </a>
-              </li>
-            </ul>
-          </div>
-          
-          <div>
-            <h4 className="font-playfair font-semibold mb-4">Connect</h4>
-            <div className="flex gap-4 flex-wrap">
-              <a 
-                href="https://www.linkedin.com/in/amrit-raj-611447128/" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="w-10 h-10 border border-gray-600 rounded-full flex items-center justify-center text-gray-600 hover:bg-gray-600 hover:text-white transition-colors"
+
+            {/* Social Links */}
+            <div className="flex gap-4">
+            <a
+                href="mailto:amrtrj68@gmail.com"
+                className="flex items-center justify-center gap-3 px-6 rounded-full
+                  bg-orange-50 text-orange-500 hover:bg-orange-500 hover:text-white
+                  transition-all duration-300"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect width="4" height="12" x="2" y="9"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                <Mail size={16} />
+                <span className="hidden md:inline">amrtrj68@gmail.com</span>
               </a>
-              <a 
-                href="https://github.com/amritaadeez" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="w-10 h-10 border border-gray-600 rounded-full flex items-center justify-center text-gray-600 hover:bg-gray-600 hover:text-white transition-colors"
+              <a
+                href="tel:+918789371964"
+                className="flex items-center justify-center gap-3 px-6 rounded-full
+                  bg-orange-50 text-orange-500 hover:bg-orange-500 hover:text-white
+                  transition-all duration-300"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path><path d="M9 18c-4.51 2-5-2-7-2"></path></svg>
+                <Phone size={15} />
+                <span className="hidden md:inline">+91 8789371964</span>
               </a>
-              <a 
-                href="https://www.instagram.com/_amrit_itsaadeez/" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="w-10 h-10 border border-gray-600 rounded-full flex items-center justify-center text-gray-600 hover:bg-gray-600 hover:text-white transition-colors"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg>
-              </a>
-              <a 
-                href="https://x.com/amrtrj68" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="w-10 h-10 border border-gray-600 rounded-full flex items-center justify-center text-gray-600 hover:bg-gray-600 hover:text-white transition-colors"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path></svg>
-              </a>
+              {socialLinks.map((social) => (
+                <motion.a
+                  key={social.label}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-10 h-10 flex items-center justify-center rounded-full
+                    bg-orange-50 text-orange-500
+                    hover:bg-orange-500 hover:text-white
+                    transition-all duration-300"
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
+                  aria-label={social.label}
+                >
+                  <social.icon size={18} />
+                </motion.a>
+              ))}
             </div>
           </div>
-        </div>
-
-        <div className="mt-8 flex flex-col sm:flex-row justify-center items-center gap-4">
-          <Link 
-            href="/contact"
-            className="relative inline-block px-8 py-3 bg-transparent border-2 border-gray-600 text-gray-600 rounded-full font-semibold hover:bg-gray-600 hover:text-white transition-colors text-center group overflow-hidden"
-          >
-            <span className="absolute inset-0 w-full h-full transition-all duration-300 ease-out transform translate-y-full bg-gray-600 group-hover:translate-y-0"></span>
-            <span className="relative group-hover:text-white">Let's Connect</span>
-          </Link>
-        </div>
-        
-        <div className="border-t mt-12 pt-8 text-center text-gray-600">
-          <p>© {new Date().getFullYear()} Amrit Raj. All rights reserved.</p>
-          <p className="mt-2">Made with ❤️ in India</p>
-        </div>
+        </motion.div>
       </div>
     </footer>
   );

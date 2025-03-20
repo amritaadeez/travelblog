@@ -8,6 +8,7 @@ export const BLOG_POSTS = [
     slug: "delhi",
     category: "Heritage",
     readTime: "5 min read",
+    featured: true,
     author: {
       name: "Aditya Sharma",
       avatar: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&auto=format&fit=crop&q=60",

@@ -6,6 +6,7 @@ import { useScroll } from '@/hooks/useScroll';
 import MobileMenu from './MobileMenu';
 import Image from 'next/image';
 import Logo from '@/app/logo.png';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const NAV_ITEMS = [
   { label: 'Blog', path: '/blog' },
@@ -17,90 +18,125 @@ const NAV_ITEMS = [
 
 export default function Navbar() {
   const pathname = usePathname();
-  const isHomePage = pathname === '/';
-  const isBlogPage = pathname.startsWith('/blog');
-  const isCategoriesPage = pathname === '/categories';
-  const isAboutPage = pathname === '/about';
-  const isContactPage = pathname === '/contact';
-  const isStatesPage = pathname === '/states';
-  const isTransparentPage = isHomePage || isBlogPage || isCategoriesPage || isAboutPage || isContactPage || isStatesPage;
-  
   const { isScrolled } = useScroll({ offset: 20 });
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const isTransparentPage = ['/', '/blog', '/categories', '/about', '/contact', '/states'].includes(pathname);
 
-  const getNavStyles = (isScrolled: boolean, isTransparentPage: boolean) => ({
-    nav: `fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
-      isScrolled 
-        ? 'bg-white/95 backdrop-blur-sm shadow-md' 
-        : isTransparentPage 
-          ? 'bg-transparent' 
-          : 'bg-white shadow-sm'
-    }`,
-    link: (isActive: boolean) => `
-      relative px-4 py-2 transition-colors rounded-full
-      ${isScrolled 
-        ? isActive 
-          ? 'text-orange-500' 
-          : 'text-gray-900 hover:text-orange-500' 
-        : isTransparentPage 
-          ? isActive 
-            ? 'text-orange-300' 
-            : 'text-white hover:text-orange-300' 
-          : isActive 
-            ? 'text-orange-500' 
-            : 'text-gray-900 hover:text-orange-500'
+  const navVariants = {
+    hidden: { y: -100, opacity: 0 },
+    visible: { 
+      y: 0, 
+      opacity: 1,
+      transition: { 
+        type: "spring",
+        stiffness: 100,
+        damping: 20
       }
-      ${isActive ? 'after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-current' : ''}
-    `,
-    logo: `text-xl font-bold transition-colors ${
-      isScrolled 
-        ? 'text-gray-900' 
-        : isTransparentPage 
-          ? 'text-white' 
-          : 'text-gray-900'
-    }`,
-    menuIcon: `w-6 h-6 ${
-      isScrolled || !isTransparentPage ? 'text-gray-900' : 'text-white'
-    }`
-  });
+    }
+  };
 
-  const styles = getNavStyles(isScrolled, isTransparentPage);
+  const linkVariants = {
+    hover: { 
+      scale: 1.05,
+      transition: { type: "spring", stiffness: 400, damping: 10 }
+    }
+  };
 
   return (
     <>
-      <nav className={styles.nav}>
+      <motion.nav
+        initial="hidden"
+        animate="visible"
+        variants={navVariants}
+        className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 ${
+          isScrolled 
+            ? 'bg-white/95 backdrop-blur-md shadow-lg' 
+            : isTransparentPage 
+              ? 'bg-gradient-to-b from-black/50 to-transparent' 
+              : 'bg-white shadow-md'
+        }`}
+      >
         <div className="container mx-auto px-4">
-          <div className="flex justify-between items-center h-16">
-            <Link href="/" className={`${styles.logo} hover:opacity-80 transition-opacity flex items-center gap-2`}>
-              <Image 
-                src={Logo}
-                alt="Hidden India Logo" 
-                width={32} 
-                height={32}
-                className="object-contain"
-              />
-              <span className="md:inline">Hidden India</span>
-            </Link>
-            
-            <div className="hidden md:flex items-center space-x-2">
-              {NAV_ITEMS.map(({ label, path }) => (
-                <Link 
-                  key={path}
-                  href={path}
-                  className={styles.link(pathname === path)}
+          <div className="flex justify-between items-center h-20">
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Link href="/" className="flex items-center gap-3 group">
+                <motion.div
+                  whileHover={{ rotate: 360 }}
+                  transition={{ duration: 0.5 }}
                 >
-                  {label}
-                </Link>
-              ))}
+                  <Image 
+                    src={Logo}
+                    alt="Hidden India Logo" 
+                    width={40} 
+                    height={40}
+                    className="object-contain rounded-full shadow-md group-hover:shadow-lg transition-shadow"
+                  />
+                </motion.div>
+                <span className={`text-xl font-bold transition-all duration-300 ${
+                  isScrolled 
+                    ? 'text-gray-800' 
+                    : isTransparentPage 
+                      ? 'text-white' 
+                      : 'text-gray-800'
+                } group-hover:text-orange-500`}>
+                  Hidden India
+                </span>
+              </Link>
+            </motion.div>
+
+            <div className="hidden md:flex items-center space-x-1">
+              {NAV_ITEMS.map(({ label, path }) => {
+                const isActive = pathname === path;
+                return (
+                  <motion.div
+                    key={path}
+                    variants={linkVariants}
+                    whileHover="hover"
+                  >
+                    <Link
+                      href={path}
+                      className={`relative px-4 py-2 rounded-full transition-all duration-300 ${
+                        isScrolled 
+                          ? isActive 
+                            ? 'text-orange-500' 
+                            : 'text-gray-700 hover:text-orange-500' 
+                          : isTransparentPage 
+                            ? isActive 
+                              ? 'text-orange-300' 
+                              : 'text-white hover:text-orange-300' 
+                            : isActive 
+                              ? 'text-orange-500' 
+                              : 'text-gray-700 hover:text-orange-500'
+                      }`}
+                    >
+                      {label}
+                      {isActive && (
+                        <motion.div
+                          layoutId="navbar-active"
+                          className="absolute bottom-0 left-0 right-0 h-0.5 bg-current"
+                          transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                        />
+                      )}
+                    </Link>
+                  </motion.div>
+                );
+              })}
             </div>
 
-            <button 
+            <motion.button 
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
               className="md:hidden p-2 rounded-full hover:bg-white/10 transition-colors"
               onClick={() => setIsMobileMenuOpen(true)}
               aria-label="Menu"
             >
               <svg 
-                className={styles.menuIcon}
+                className={`w-6 h-6 ${
+                  isScrolled || !isTransparentPage ? 'text-gray-900' : 'text-white'
+                }`}
                 fill="none" 
                 stroke="currentColor" 
                 viewBox="0 0 24 24"
@@ -112,10 +148,10 @@ export default function Navbar() {
                   d="M4 6h16M4 12h16M4 18h16"
                 />
               </svg>
-            </button>
+            </motion.button>
           </div>
         </div>
-      </nav>
+      </motion.nav>
       <MobileMenu 
         isOpen={isMobileMenuOpen} 
         setIsOpen={setIsMobileMenuOpen}
