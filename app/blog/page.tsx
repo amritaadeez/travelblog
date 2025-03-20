@@ -2,7 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { Search, MapPin } from "lucide-react";
+import { Search, MapPin, X } from "lucide-react";
 import ScrollDownIndicator from "@/components/common/ScrollDownIndicator";
 import { BLOG_POSTS } from "./data";
 
@@ -19,6 +19,24 @@ export default function BlogPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [isSearchActive, setIsSearchActive] = useState(false);
+
+  // Helper function to check if we're actively searching/filtering
+  const isActiveSearch = () => {
+    return searchQuery !== "" || selectedCategory !== "";
+  };
+
+  // Modified category selection handler
+  const handleCategorySelect = (categoryName: string) => {
+    setSelectedCategory(selectedCategory === categoryName ? "" : categoryName);
+    setIsSearchActive(true); // Keep search active when selecting categories
+  };
+
+  // Modified search clear handler
+  const handleClearSearch = () => {
+    setSearchQuery("");
+    setSelectedCategory("");
+    setIsSearchActive(false);
+  };
 
   const filteredPosts = BLOG_POSTS.filter((post) => {
     const matchesSearch =
@@ -41,7 +59,7 @@ export default function BlogPage() {
       {/* Hero Section */}
       <div
         className={`relative w-full transition-all duration-500 ${
-          isSearchActive ? "h-[30vh]" : "min-h-screen"
+          isSearchActive ? "h-[20vh]" : "min-h-screen"
         }`}
       >
         <Image
@@ -94,7 +112,9 @@ export default function BlogPage() {
             {/* Search Bar */}
             <div
               className={`transition-all duration-500 ${
-                isSearchActive ? "w-[400px]" : "max-w-xl mx-auto"
+                isSearchActive 
+                  ? "w-full max-w-2xl mx-auto" 
+                  : "max-w-xl mx-auto"
               }`}
             >
               <div className="relative">
@@ -103,15 +123,31 @@ export default function BlogPage() {
                   placeholder="Search stories..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  onFocus={() => setIsSearchActive(true)}
-                  onBlur={() => !searchQuery && setIsSearchActive(false)}
-                  className="w-full px-6 py-4 pl-14 rounded-full 
+                  onFocus={() => {
+                    setIsSearchActive(true);
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                  onBlur={() => !isActiveSearch() && setIsSearchActive(false)}
+                  className="w-full px-6 py-4 pl-14 pr-12 rounded-full 
                     text-white placeholder-white/70 
                     focus:outline-none focus:ring-2 focus:ring-white/50 transition-all
                     bg-transparent border-2 border-white/30
                     backdrop-blur-sm"
                 />
                 <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-white/70" />
+                
+                {/* Clear Search Button */}
+                {searchQuery && (
+                  <button
+                    onClick={handleClearSearch}
+                    className="absolute right-5 top-1/2 -translate-y-1/2 
+                      p-1 rounded-full hover:bg-white/10 transition-colors
+                      text-white/70 hover:text-white"
+                    aria-label="Clear search"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                )}
               </div>
             </div>
           </div>
@@ -143,11 +179,7 @@ export default function BlogPage() {
             {CATEGORIES.map((category) => (
               <button
                 key={category.name}
-                onClick={() =>
-                  setSelectedCategory(
-                    selectedCategory === category.name ? "" : category.name
-                  )
-                }
+                onClick={() => handleCategorySelect(category.name)}
                 className={`px-4 py-2 rounded-full text-sm whitespace-nowrap ${
                   selectedCategory === category.name
                     ? "bg-orange-500 text-white"
@@ -193,8 +225,22 @@ export default function BlogPage() {
             ))}
           </div>
         ) : (
-          <div className="text-center py-12">
-            <p className="text-gray-900 text-lg">No posts found matching your criteria.</p>
+          <div className="text-center py-12 max-w-md mx-auto">
+            <div className="relative w-48 h-48 mx-auto mb-8">
+              <Image
+                src="/no-results.svg"
+                alt="No results found"
+                fill
+                className="object-contain"
+              />
+            </div>
+            <h3 className="text-2xl font-bold text-gray-900 mb-3">
+              No Stories Found
+            </h3>
+            <p className="text-gray-600 mb-6">
+              We couldn't find any travel stories matching your search criteria. Try adjusting your filters or search terms.
+            </p>
+           
           </div>
         )}
       </div>

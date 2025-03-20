@@ -800,19 +800,20 @@ export default function BlogPost() {
   return (
     // Add min-h-screen and pb-20 to ensure content doesn't overlap with footer
     <div className="min-h-screen pb-20">
-      {/* Back Button */}
-      <button 
-        onClick={() => router.back()}
-        className="fixed top-4 left-8 z-200 flex items-center gap-2 px-4 py-2 bg-white/80 backdrop-blur-sm rounded-full shadow-lg hover:bg-white transition-colors"
-      >
-        <ArrowLeft size={20} />
-        <span>Back</span>
-      </button>
 
       {/* Hero Section */}
       <div
         className={`relative h-[70vh] bg-gradient-to-r ${cityTheme.primaryColor}`}
       >
+        {/* Back Arrow */}
+        <button 
+          onClick={() => router.back()}
+          className="absolute top-24 left-6 z-10 w-10 h-10 rounded-full bg-black/30 hover:bg-black/50 transition-all duration-300 flex items-center justify-center"
+          aria-label="Go back"
+        >
+          <ArrowLeft size={20} className="text-white" />
+        </button>
+
         <Image
           src={cityTheme.headerImage}
           alt={`${slug} cityscape`}

@@ -56,12 +56,12 @@ export default function Hero() {
   }, [goToNextSlide]);
 
   return (
-    <div className="relative h-screen w-full overflow-hidden">
+    <div className="relative h-[100svh] w-full overflow-hidden">
       {/* Background Images */}
       {HERO_IMAGES.map((image, index) => (
         <div
           key={image.url}
-          className={`absolute inset-0 transition-opacity duration-500 ease-in-out
+          className={`absolute inset-0 transition-opacity duration-700 ease-in-out
             ${currentImageIndex === index ? "opacity-100" : "opacity-0"}`}
         >
           <Image
@@ -71,7 +71,7 @@ export default function Hero() {
             className="object-cover object-center"
             priority={index === 0}
             sizes="100vw"
-            quality={90}
+            quality={85}
           />
         </div>
       ))}
@@ -82,13 +82,13 @@ export default function Hero() {
       {/* Progress Bar */}
       <div className="absolute bottom-0 left-0 right-0 h-1 bg-white/20">
         <div 
-          className="h-full bg-orange-500 transition-all duration-500"
+          className="h-full bg-orange-500 transition-all duration-500 ease-out"
           style={{ width: `${((currentImageIndex + 1) / HERO_IMAGES.length) * 100}%` }}
         />
       </div>
 
-      {/* Location Indicator */}
-      <div className="absolute md:top-8 md:left-8 bottom-8 left-8 text-white/90 font-light">
+      {/* Location Indicator - Same position for all screen sizes */}
+      <div className="absolute top-32 left-8 text-white/90 font-light">
         <div className="flex items-center space-x-2">
           <svg 
             xmlns="http://www.w3.org/2000/svg" 
@@ -98,12 +98,14 @@ export default function Hero() {
           >
             <path fillRule="evenodd" d="M11.54 22.351l.07.04.028.016a.76.76 0 00.723 0l.028-.015.071-.041a16.975 16.975 0 001.144-.742 19.58 19.58 0 002.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 00-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 002.682 2.282 16.975 16.975 0 001.145.742zM12 13.5a3 3 0 100-6 3 3 0 000 6z" clipRule="evenodd" />
           </svg>
-          <span className="text-lg">{HERO_IMAGES[currentImageIndex].location}</span>
+          <span className="text-lg mobile:text-base tablet:text-base desktop:text-lg">
+            {HERO_IMAGES[currentImageIndex].location}
+          </span>
         </div>
       </div>
 
       {/* Image Navigation Dots - Hide on mobile */}
-      <div className="absolute bottom-32 left-1/2 transform -translate-x-1/2 hidden md:flex space-x-2">
+      {/* <div className="absolute bottom-32 left-1/2 transform -translate-x-1/2 hidden md:flex space-x-2">
         {HERO_IMAGES.map((_, index) => (
           <button
             key={index}
@@ -123,53 +125,70 @@ export default function Hero() {
             aria-label={`Show image ${index + 1}`}
           />
         ))}
-      </div>
+      </div> */}
 
       {/* Hero Content */}
-      <div className="absolute inset-0 flex items-center justify-center">
-        <div className="text-center text-white px-4">
-          <h1 className="text-6xl md:text-7xl font-bold mb-6 animate-fade-in">
+      <div className="absolute inset-0 flex items-center justify-center px-4 sm:px-6 lg:px-8" style={{ top: '-10%' }}>
+        <div className="text-center text-white max-w-4xl mx-auto">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 animate-fade-in">
             Incredible India
           </h1>
-          <p className="text-xl md:text-2xl mb-8 text-gray-200 animate-fade-in-delay">
-            From ancient temples to modern metropolises, discover India's rich
-            heritage
+          <p className="text-base sm:text-lg md:text-xl mb-6 sm:mb-8 text-gray-200 animate-fade-in-delay max-w-2xl mx-auto">
+            From ancient temples to modern metropolises, discover India's rich heritage
           </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-4 sm:space-x-4 animate-fade-in-delay-2 w-full sm:w-auto">
+          <div className="flex flex-col sm:flex-row justify-center gap-4 animate-fade-in-delay-2">
             <Link
               href="/states"
-              className="w-full sm:w-[200px] px-8 py-3 bg-orange-500 text-white rounded-full font-semibold hover:bg-orange-600 transition-colors text-center"
+              className="w-full sm:w-auto px-8 py-3 bg-orange-500 text-white rounded-full font-semibold hover:bg-orange-600 transition-all duration-300 text-center sm:min-w-[200px]"
             >
               Explore Cities
             </Link>
             <Link
               href="/categories"
-              className="w-full sm:w-[200px] px-8 py-3 bg-transparent border-2 border-white text-white rounded-full font-semibold hover:bg-white/10 transition-colors text-center"
+              className="w-full sm:w-auto px-8 py-3 bg-transparent border-2 border-white text-white rounded-full font-semibold hover:bg-white/10 transition-all duration-300 text-center sm:min-w-[200px]"
             >
               Travel Guides
             </Link>
           </div>
+        </div>
+      </div>
 
-          {/* Stats Section */}
-          <div className="mt-16 flex justify-center space-x-12 text-white/90">
-            <div className="text-center">
-              <div className="font-bold text-4xl mb-1">28+</div>
-              <div className="text-sm text-gray-300">States</div>
-            </div>
-            <div className="text-center">
-              <div className="font-bold text-4xl mb-1">40+</div>
-              <div className="text-sm text-gray-300">UNESCO Sites</div>
-            </div>
-            <div className="text-center">
-              <div className="font-bold text-4xl mb-1">1000+</div>
-              <div className="text-sm text-gray-300">Destinations</div>
-            </div>
-          </div>
+      {/* Stats Section - Vertical for landscape tablets and desktop */}
+      <div className="hidden lg:flex portrait:hidden md:landscape:flex flex-col absolute right-8 top-1/2 -translate-y-1/2 space-y-6 text-white/90 z-10 bg-black/30 backdrop-blur-sm p-4 rounded-2xl border border-white/10">
+        <div className="text-center w-32">
+          <div className="font-bold text-2xl mb-1">28+</div>
+          <div className="text-xs text-gray-300">States</div>
+        </div>
+        <div className="w-10 h-px bg-white/20 mx-auto" />
+        <div className="text-center w-32">
+          <div className="font-bold text-2xl mb-1">40+</div>
+          <div className="text-xs text-gray-300">UNESCO Sites</div>
+        </div>
+        <div className="w-10 h-px bg-white/20 mx-auto" />
+        <div className="text-center w-32">
+          <div className="font-bold text-2xl mb-1">1000+</div>
+          <div className="text-xs text-gray-300">Destinations</div>
+        </div>
+      </div>
+
+      {/* Stats Section - Horizontal for mobile and portrait tablets */}
+      <div className="md:portrait:flex lg:hidden landscape:md:hidden absolute left-0 right-0 flex justify-center space-x-12 text-white/90" style={{ top: 'calc(50% + 120px)' }}>
+        <div className="text-center w-24">
+          <div className="font-bold text-2xl mb-1">28+</div>
+          <div className="text-xs text-gray-300">States</div>
+        </div>
+        <div className="text-center w-24">
+          <div className="font-bold text-2xl mb-1">40+</div>
+          <div className="text-xs text-gray-300">UNESCO Sites</div>
+        </div>
+        <div className="text-center w-24">
+          <div className="font-bold text-2xl mb-1">1000+</div>
+          <div className="text-xs text-gray-300">Destinations</div>
         </div>
       </div>
 
       {/* Popular Destinations Carousel - Hide on mobile */}
-      <div className="absolute bottom-20 left-0 right-0 px-4 hidden md:block">
+      <div className="absolute bottom-24 left-0 right-0 px-4 hidden md:block">
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {/* Delhi Card */}
