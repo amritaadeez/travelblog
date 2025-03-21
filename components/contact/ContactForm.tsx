@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { z } from 'zod';
 import SuccessPopup from '@/components/common/SuccessPopup';
+import Image from 'next/image';
 
 // Validation schema
 const formSchema = z.object({
@@ -135,7 +136,8 @@ export default function ContactForm() {
 
   const getInputClassName = (fieldName: keyof FormData) => {
     const isTextarea = fieldName === 'message';
-    const baseClasses = `w-full px-4 py-3 ${isTextarea ? 'rounded-2xl' : 'rounded-full'} transition-all duration-200 focus:outline-none bg-white`;
+    const baseClasses = `w-full px-4 py-3 ${isTextarea ? 'rounded-2xl' : 'rounded-full'} 
+      transition-all duration-200 focus:outline-none bg-white/80 backdrop-blur-sm`;
     const validationClasses = touched[fieldName]
       ? errors[fieldName]
         ? "border-2 border-red-300 focus:border-red-500"

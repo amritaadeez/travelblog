@@ -196,7 +196,7 @@ export default function AboutPage() {
                 className="relative group"
               >
                 <div className="bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100">
-                  <div className="text-5xl font-bold bg-gradient-to-r from-orange-500 to-orange-600 bg-clip-text text-transparent mb-3">
+                  <div className="text-3xl lg:text-5xl font-bold bg-gradient-to-r from-orange-500 to-orange-600 bg-clip-text text-transparent mb-3">
                     {stat.number}
                   </div>
                   <div className="text-gray-600 font-medium">{stat.label}</div>
@@ -210,11 +210,11 @@ export default function AboutPage() {
 
       {/* Our Story Section - Enhanced with better visuals */}
       {/* Our Story Section */}
-      <section id="our-story" className="py-24 bg-gray-50">
+      <section id="our-story" className="py-0 md:py-24 bg-gray-50">
         <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 gap-16 items-center">
+          <div className="grid md:grid-cols-2 gap-16 ">
             <motion.div
-              initial={{ opacity: 0, x: -30 }}
+              initial={{ opacity: 0, x: 0 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               className="max-w-xl"
@@ -495,6 +495,9 @@ export default function AboutPage() {
     </div>
   );
 }
+
+
+
 
 
 
